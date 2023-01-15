@@ -1,0 +1,1245 @@
+<?php
+require 'vendor/autoload.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["name"])) {
+        $error = urlencode('Error! Name is required.');
+        header("Location: 
+
+contact.php?error=$error");
+        exit();
+      $nameErr = "Name is required";
+    } else {
+      $name = 
+
+$_POST["name"];
+    }
+    
+    if (empty($_POST["phone"])) {
+        $error = urlencode('Error! Phone is 
+
+required.');
+        header("Location: contact.php?error=$error");
+        exit();
+      $nameErr = "Phone 
+
+is required";
+    } else {
+      $phone = $_POST["phone"];
+    }
+    
+    if (empty($_POST["subject"])) {
+    $error = urlencode('Error! Subject is required.');
+        header("Location: contact.php?error=
+
+$error");
+        exit();
+      $nameErr = "Subject is required";
+    } else {
+      $reason = $_POST
+
+["subject"];
+    }
+
+    if (empty($_POST["email"])) {
+      $emailErr = "Email is required";
+      $error = 
+
+urlencode('Error! Email is required.');
+        header("Location: contact.php?error=$error");
+        
+exit();
+    } else {
+      $email = $_POST["email"];
+      // check if e-mail address is well-formed
+      
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format"; 
+        
+$error = urlencode('Error! Invalid email format.');
+        header("Location: contact.php?error=
+
+$error");
+        exit();
+      }
+    }
+   
+    if (empty($_POST["message"])) {
+      $message = "message is 
+
+required";
+            $error = urlencode('Error! message is required.');
+        header("Location: 
+
+contact.php?error=$error");
+        exit();
+    } else {
+      $message = $_POST["message"];
+    }
+      if($nameErr== '' and $emailErr== ''){
+     
+        $from = new SendGrid\Email(null, $email);
+        
+$subject = "שירן! התקבלה הודעה מלקוח!";
+        $to = new SendGrid\Email(null, "barozshiran@gmail.com");
+
+$content = new SendGrid\Content("text/plain", "sent from: ". $name . "\r\n subject:" . $reason. "\r\n phone: " . $phone . " \r\n message:" .$message);
+
+        $mail = new SendGrid\Mail($from, $subject, $to, $content);
+        
+        $apiKey = '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';
+        $sg = new \SendGrid($apiKey);
+
+       $response = $sg->client->mail()->send()->post($mail);
+          if($response->statusCode() == "202") 
+		        echo "<script type='text/javascript'>alert('ההודעה נשלחה בהצלחה!')</script>";
+	      else
+		        echo "<script type='text/javascript'>alert('ההודעה לא נשלחה, נא וודא את הנתונים שהזנת!')</script>";
+
+      }
+    }
+
+?>
+<html>
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108205774-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-108205774-1');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Mortgage</title>
+<!--
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="shortcut icon" href="favicon.ico" type="img/x-icon">
+  -->  
+<link rel="shortcut icon" href="img/NewLogo.png"/>
+<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/s.css" rel="stylesheet" type="text/css">
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="css/responsive.css" rel="stylesheet" type="text/css">
+<link href="css/animate.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/btn.css" />
+<link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 799px)' href='css/btn-mobile.css' />
+
+
+<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
+<script type="text/javascript" src="js/classie.js"></script>
+<script src="contactform/contactform.js"></script>
+
+</head>
+
+<body>
+<style>@media (max-width: 800px) {
+      #firstlogo {
+        max-width:250%;
+		height:200px;
+		width:340;
+		margin-right:-40px;
+        margin-right: -80;
+      }
+    }</style>
+<header class="header" id="header"><!--header-start-->
+    <a href="index.php" style="float:left;"><img src="img/israelicon.png" style="width:60px;height:40px;"></a>    
+	<div class="container">
+    	<div class="logo animated fadeInDown delay-07s">
+        	<a href="#"><img src="img/NewLogoText.png"  id="firstlogo"></a>	
+        </div>
+        <a id="startbutton" class="link animated fadeInUp delay-1s servicelink" href="#service" style="direction:ltr;margin-right:50px;"><strong>You might save or you might earn !</strong></a>
+    </div>    
+    <div class="we-create animated fadeInUp delay-1s" style="margin-bottom:0px">
+        <img src="img/unionnoback.png" style="float: right;padding-right: 10px;margin-top: -30px"/> 
+    </div>
+</header><!--header-end-->
+
+<nav class="main-nav-outer" id="test"><!--main-nav-start-->
+	<div class="container" style="width:100%;max-width:100%;font-weight: bold">
+        <ul class="main-nav">
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#nicetomeet">Nice to Meet</a></li>
+            <li><a href="#calc">Tools & Calculators</a></li>
+            <li class="small-logo"><a href="#header"><img src="img/NewLogoText.png" id="menulogo"></a></li>
+            <li><a href="#Portfolio">?Did you Know</a></li>
+            <li><a href="#think">Food for Thought</a></li>
+            <li><a href="#team">Our Essence</a></li>
+        </ul>
+        <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
+    </div>
+</nav><!--main-nav-end-->
+
+<section class="main-section" id="service" style="direction:ltr;height:100%;display: flex;align-items: center;"><!--main-section-start-->
+	<div class="container" style="padding-top: 0px;">   
+				<div class="service-list" style="text-align: center;width: 100%;font-family: 'Montserrat', sans-serif;color:#222222;font-size: 16px;font-weight: bold;margin-left: auto;margin-right: auto">
+					<h3 id="serviceheadline" style="padding-bottom: 5px">Welcome to Custom Mortgage Site!</h3>
+                    <h3 id="serviceheadline">Let me congratulate you on your decision to purchase property and the initiative to leverage yourself.</h3><br />
+                    <h3 id="serviceheadline">Your desires, interests and needs become my goal. <br />  It's important to me that you feel safe and comfortable in the ONE deal that matters most to you.</h3>
+				</div>
+            	<div class="service-list">
+                    <div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-credit-card"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Financial Savings</h3>
+                        <p>I will conduct the whole process with the banks with reliability, transparency, escort and guidance, and will achieve the best conditions for creating<strong> a mortgage tailored </strong>to your financial profile, with the emphasis being that you return a minimum amount of money to the bank.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-user"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Personal Escort</h3>
+                        <p>I will accompany you hand in hand and formulate the best way for you to take <strong> a custom mortgage </strong> with comprehensive accompaniment and professional solutions in a professional manner and keeping discretion until the bank signs.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-magic" ></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Creative Solutions</h3>
+                        <p>I will make the most suitable solutions for you with an emphasis on courteous, professional and personal service. I will make the process effective, simple and will give you tranquility, peace of mind and a big financial savings.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-graduation-cap"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Professional Consulting</h3>
+                        <p>As the native speaker of the "banking language" and as a professional mortgage advisor, I have a fundamental role in your most important transaction, both in forming an optimal mix and adapting it to your personal needs, and in conducting negotiations with the banks.</p>
+                    </div>
+                </div>
+        </div>
+</section><!--main-section-end-->
+
+<section class="main-section team client-part" id="team"  style="background-color: #000000;color: #ffffff;min-height: 100%"><!--alabaster main-section team-start-->
+	<div class="container" style="padding-top: 40px;">
+        <h3 style="text-align:center;font-family: 'Montserrat', sans-serif;color:#ffffff;font-size: 19px;font-weight: bold;direction:ltr;">I invite you to enter into the great financial deal of your life in peace.</h3>
+        <h3 style="text-align:center;font-family: 'Montserrat', sans-serif;color:#ffffff;font-size: 19px;font-weight: bold;direction:ltr;">In a custom mortgage your personal need becomes my goal!</h3>
+        <br /><br /><br />
+        <div class="team-leader-block clearfix">
+            <div class="team-leader-box" style="height: 800px;">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#contact"></a></div>
+                    <img src="img/RequestForAnyPurpose.png">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <br />
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold">Financial support and loan request for any purpose</h3>
+                <span>according to your needs and desires</span>
+                <p style="direction:ltr;">A loan for any purpose is given for a variety of purposes and must be defined as a purpose such as: renovation, expansion, covering loans, helping children, purchasing property, etc. The loan is given up to 50% of the value of the property and is examined at the bank as a new mortgage. The changes in the market can affect the monthly repayment and the balance of the debt, and therefore the nature of the transaction, its purpose and nature must be taken into account. Budget management should be smart and without compromising standard of living.</p>
+                <br />
+                <p style="direction:ltr;"><strong>I will develop the best way to meet your needs and desires with comprehensive financial support and solutions.</strong></p>
+            </div>
+            <div class="team-leader-box" style="height: 800px;">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/RecyclingMortgage.jpg">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <br />
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold">Recycling mortgage</h3>
+                <span>hand in hand to improve conditions</span>
+                <br />
+                <p style="direction:ltr;">The recycling process requires understanding and professionalism, and needs to be <strong> tailored to each individual's financial profile and repayment ability. </strong> Over the course of life, there are many changes that affect expenses and income, such as: a paid-up educational fund, a newborn baby, inheritances, alimony, salary increases, etc. In addition, market conditions change and can affect mortgage tracks. The recycling process can save tens of thousands to hundreds of thousands of shekels and improve your standard of living in the present and future.</p>
+                <br /> 
+                <p style="direction:ltr;"><strong>You are invited to arrange a consultation meeting free of charge.</strong></p>
+            </div>
+            <div class="team-leader-box" style="height: 800px;">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/NewMortgage.jpg">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <br />
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold;">New Mortgage</h3>
+                <span>Custom Made</span>
+                <br />
+                <p style="direction:rtl;">Taking a mortgage is a large and substantial deal, and assembling the different courses by professional advice and guidance in the best and most accurate manner which will lead to substantial savings in the transaction. The mortgage should be suitable for the type of transaction, such as: purchase from a contractor / second hand purchase / self-construction / purchasing group, Tama 38 etc. The mortgage has a long-term effect on your life, <strong>Return minimum money to the bank!</strong></p>
+                <br />
+                <br />
+                <br />
+                <p style="direction:ltr;padding-top:7px;"><strong>I will make sure you get the best mortgage for you personally.</strong></p>
+            </div>
+        </div>
+    </div>
+</section><!--main-section team-end-->
+
+<section class="main-section" id="think" style='min-height: 100%;display: flex;align-items: center;'><!--main-section-start-->
+	<div class="container"  style="padding-top: 40px;">   
+            
+				<div class="service-list" style="text-align: center;width: 100%;font-family: 'Montserrat', sans-serif;color:#222222;font-size: 16px;font-weight: bold;margin-left: auto;margin-right: auto;direction:ltr;">
+                    <h3><p><strong>When did you last check your Mortgage?</strong></p><br />
+                        <p>From the moment you took a mortgage until now your income has increased? / Your needs have changed?</p>
+                        <p>Maybe now you are required to reduce costs?</p>
+                        <p>Maybe you can use your property as an investment for the next thing?</p>
+                        <p>Dont leave any loose ends or open Questions!</p><br />
+                        <strong>You are invited to contact me to arrange a meeting at no cost to understand<br /> your personal needs and assemble for you a mortgage tailored to you personally!</strong></h3>
+                </div>
+            	<div class="service-list">
+                    <div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-user fa-gift"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">From me to you</h3>
+                        <p>Checking mortgage recycling without cost or obligation.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-exchange"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Adjustment to household flow.</h3>
+                        <p>Financial support and checking of loans that constitute a burden on the monthly cash flow. Many mortgage recipients have additional loans added to the monthly repayments and make it difficult for the home economic situation. I will make sure you get the best mortgage for you personally.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-bar-chart"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Matching courses for Maximum Benefit </h3>
+                        <p>The formation of an optimal mortgage mix and adaptation to significant changes in your life, your family and the economy. I will take care of the ideal conditions for you that are personally suited to your needs and desires.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-compass"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Comprehensive accompaniment and good solutions.</h3>
+                        <p>Many customers meet me after they have made all the possible mistakes. They come to me and ask me to help them because they were turned down at the bank or because they are in arrears with payments to the contractor. In fact, the step we took to get ahead in life and the deal that should make us happy becomes a nightmare unnecessarily. Do not hesitate - call!</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1" style="float:left;">
+                    	<i class="fa fa-trophy"></i>
+                    </div>
+                	<div class="service-list-col2" style="direction:ltr;padding-left: 10px;">
+                        <h3 class="graphtitle">Leverage yourself!</h3>
+                        <p>Do you have a property? Debt of low mortgage? Value of property increased? If so, the sky is the limit! Use the property to leverage yourself and upgrade your standard of living. I will accompany you all the way to the signatures at the bank and make sure that the process is simple, efficient and economical.</p>
+                    </div>
+                </div>
+                
+        </div>
+</section><!--main-section-end-->
+
+<section class="main-section paddind client-part" id="Portfolio" style="width:100%;background-color: #000000;color: #ffffff"><!--alabaster main-section-start-->
+	<div class="container"  style="padding-top: 40px;">
+    	<h6 style="font-family: 'Montserrat', sans-serif;font-size: 19px;font-weight: bold;color: #ffffff;direction:ltr;">Everything you wanted to know and did not dare to ask ...</h6>
+        <div class="portfolioFilter"style="width:100%;">  
+        <ul class="Portfolio-nav wow fadeIn delay-02s" style="width:100%;">
+            <li><a class="btn btn-block" href="#" data-filter=".repayments" style="direction:ltr;">Repayment & Drag Taxes</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".about" style="direction:ltr;">About the Mortgage</a></li>
+            <li><a class="btn current" href="#" data-filter="*" style="direction:ltr;">All Articles</a></li>
+        	<br />
+            <li><a class="btn btn-block" href="#" data-filter=".types" style="direction:ltr;">Types of Construction</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".benefits" style="direction:ltr;">Benefits & Advantages for all ages</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".taxes" style="direction:ltr;">Indices & Insurance</a></li>                        
+        </ul>
+       </div>         
+	</div>
+    <div class="portfolioContainer wow fadeInUp delay-04s" style="direction:ltr;">
+            	<div class="Portfolio-box about"> 
+                	<a data-toggle="modal" data-target="#myModal1"><img src="img/MortgageStory.jpg" id="left"></a>
+                	<h3 id="articletext">Mortgage .. That's the whole story!</h3>
+                </div>
+                <div class="Portfolio-box about">
+                	<a data-toggle="modal" data-target="#myModal2"><img src="img/BankChecks.jpg"></a>	
+                	<h3 id="articletext">A number of important things that the Banks are checking</h3>
+                </div>
+                <div class="Portfolio-box about"> 
+                	<a data-toggle="modal" data-target="#myModal0"><img src="img/PrivateMortgageAdvisor.png" id="left"></a>
+                	<h3 id="articletext">Why should you take a private mortgage advisor?</h3>
+                </div>
+                <div class="Portfolio-box repayments">
+                	<a data-toggle="modal" data-target="#myModal3"><img src="img/RefinanceTheMortgage.jpg" id="right"></a>	
+                	<h3 id="articletext">Should I refinance the mortgage?</h3>
+                </div>
+                <div class="Portfolio-box repayments" >
+                	<a data-toggle="modal" data-target="#myModal4"><img src="img/EarlyRepaymentFee.png" id="left"></a>	
+                	<h3 id="articletext">Early Repayment Fee - When do we pay?</h3>
+                </div>
+                <div class="Portfolio-box repayments">
+                	<a data-toggle="modal" data-target="#myModal5"><img src="img/DraggingAMortgage.jpg"></a>	
+                	<h3 id="articletext">Dragging a Mortgage - what is the process? And is it profitable?</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal6"><img src="img/Insurance.jpg" id="right"></a>	
+                	<h3 id="articletext">Insurance – what kind of insurance does the bank require and what is important to know?</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal7"><img src="img/ConstructionInputsIndex.jpg" id="left"></a>	
+                	<h3 id="articletext">Construction Inputs Index - Is there such an Index???</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal8"><img src="img/TaxPurchase.jpg"></a>	
+                	<h3 id="articletext">Tax.... Purchase ... And everything in between ..!</h3>
+                </div>
+                <div class="Portfolio-box benefits">
+                	<a data-toggle="modal" data-target="#myModal9"><img src="img/ReverseMortgage.jpg" id="right"></a>	
+                	<h3 id="articletext">Reverse Mortgage</h3>
+                </div>
+                <div class="Portfolio-box benefits">
+                	<a data-toggle="modal" data-target="#myModal10"><img src="img/PriceperOccupant.jpg" id="left"></a>	
+                	<h3 id="articletext">Price per Occupant / Price Target</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal11"><img src="img/SelfConstruction.jpg"></a>	
+                	<h3 id="articletext">Prepare yourselves for self- construction!</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal12"><img src="img/Tama38.jpg" id="right"></a>	
+                	<h3 id="articletext">Tama 38</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal13"><img src="img/PurchaseGroups.jpg"></a>	
+                	<h3 id="articletext">Purchase Groups</h3>
+                </div>
+    </div>
+                <!-- Modal-0 -->
+                <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Why should you take a private mortgage advisor?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>A private mortgage advisor accompanies and represents the property owners while keeping their best interests. Most people do not have enough knowledge about the mortgage, therefore they may find themselves committed to a deal that will affect their quality life and they may even pay more than they really need too. </p>
+                                <br />
+                                <p>The bank is a financial corporation that sells money and wants to maximize its profits, but at the same time it is also a corporation that manages risks. A mortgage is a product from a range of products that the bank sells, and as a corporation that sells a product, it is reasonable to assume that the Bank wants to make a profit and maximize its income within the framework of borrowers' ability to meet their obligations. On the one hand, the bank wants to maximize his profits by adapting the tracks of the mortgage exactly according to what is cheaper and suitable for him at that time. On the other hand, the bank wants to make sure that the borrowers can repay the monthly payments without complications and to avoid failing to comply with future obligations for the full term of the mortgage.</p>
+                                <br />
+                                <p>As a result of the various interests, caution must be exercised and a mortgage advisor must be taken who knows the professional language used by the bank and the significance of each individual in the process in order to promote the client's goals in the best possible way. The mortgage is the most important deal that will affect our quality of life for a long time and therefore it is important to know the market and consult with reliable and professional entities before closing the deal.</p>
+                                <br />
+                                <p>The Mortgage Advisor has the knowledge and the tools to deal with the Bank and to conduct exhaustive negotiations until the customer will get the best and most economical mortgage conditions made to suit the customer's abilities, needs and desires and save tens to hundreds of thousands of shekels in the transaction..</p>
+                                <br />
+                                <p><strong>In a custom mortgage I will take care of Your interests,</strong> I will make the process efficient, simple, and will give you tranquility and peace of mind, along with professionalism, transparency and availability, accompanying every step with the bank, with comprehensive accompaniment and professional solutions in a professional manner and keeping discretion, with the emphasis being that you return a minimum amount of money to the bank, save time and unnecessary bureaucracy.</p>
+                                <br />
+                                <p>My name is Shiran Bar-Oz, a mortgage consultant registered with the Association of Mortgage Advisors. In addition to being a mortgage advisor, I have the knowledge and experience from a variety of occupations during my life, which serve as a significant tool to provide you with the best possible service to create a<strong> mortgage tailored to your financial profile.</strong> I have acquired 17 years of professional experience in banking, mortgage and real estate. I have an MBA in Finance and Human Resources; Graduate of the “Psagot College” and “Focus Mortgage Academy”, and I also have a brokerage license from the time I engaged in real estate.</p>
+                                <br />
+                                <p><strong>Hand in hand we will walk to the best mortgage for you personally.</strong></p>
+                                <br />
+                                <p style="text-align:center;"><strong>When I’m asked – what is a good mortgage? I usually answer….</strong></p>
+                                <br />
+                                <p style="text-align:center;"><strong>CUSTOM MORTGAGE!</strong></p>
+                                <br />
+                                <p style="text-align:center;"><strong>Each one of us has his own unique HOME !</strong></p>
+                                <br />
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-1 -->
+                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Mortgage, that's the whole story ...</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Want to buy a house? Going to make one of the most important transactions in your life?</p>
+                                <br />
+                                <p>There are a few things you need to know about taking a mortgage.</p>
+                                <br />
+                                <p>Mortgage is the longest, largest and most complex loan you will take, but at the same time it is considered one of the best financing tools that exist, and it is important to execute it correctly with objective professional advice and advice.</p>
+                                <br />
+                                <p>Everyone (almost) needs a mortgage. Everyone have needs, desires and financial abilities.</p>
+                                <br />
+                                <p>It's important to ask: Are you going to live in the apartment? Or is it for investment?</p>
+                                <br />
+                                <p>Why do I ask? Because it really matters. Choosing the mortgage is directly affected by your needs and needs to match your<strong> personal financial profile! </strong></p>
+                                <br />
+                                <p>Choosing the mortgage mix is made of a number of parameters, before we have even dealt with interest rates.</p>
+                                <br />
+                                <p>I do not mean to say that interest rates are not important –<strong> they are very important</strong>, but only after assembling the most suitable routes suited<strong> for each one! </strong> There are a variety of routes and each track has different interests, advantages and disadvantages. This is a complex process, in a big deal.</p>
+                                <br />
+                                <p>Assembling the tracks by professional advice and guidance is the best and most accurate manner for each customer, and can lead to substantial savings, as much as tens of thousands to hundreds of thousands of shekels in the transaction.</p>
+                                <br />
+                                <p>Beyond the substantial savings, another thing that is no less important in assembling the mortgage, in the best and most qualitative way, is to understand that a mortgage has a long-term impact on your life, and therefore it is important that the house's regular management will continue to exist properly, When the emphasis<strong> is to return a minimum amount of money to the bank! </strong></p>
+                                <br />
+                                <p><strong>To your question: Why me? Since I am of vital importance as a registered consultant in the Mortgage Advisors Association in your most important transaction. I will accompany you, hand in hand, until you sign your agreement with the bank with a personal, courteous, professional and quality service. </strong> I have an MBA in finance and human resources. I work with the most advanced and up-to-date software and simulators. Beyond this, you must understand, that there is a <strong>conflict of interest </strong>between the client and the bank. The Bank is a financial institution, whose goal is to maximize its profits, while the borrower wishes to pay as little as possible and minimize their costs. I base myself on my experience as someone with professional and managerial experience of 12 years of banking seniority.</p>
+                                <br />
+                                <p><strong>I will accompany you hand in hand and formulate the best way for you to take a personal mortgage with comprehensive accompaniment and solutions in a professional manner and strict discretion. </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-2 -->
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>A number of important things that the banks are checking</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>There is regulation on the banks, subjected to Bank of Israel guidelines. The Bank of Israel is the one that updates, inter alia, directives regarding mortgages. Such as: shareholders' equity, repayment ratio, entitlements, etc. For this reason, it is important to understand that when we are interested in taking out a mortgage, we must prepare for several main parameters that the Bank examines:</p>
+                                <br />
+                                <p>We require<strong> at least 25% equity. </strong> In other words, if the value of the property is 1 million NIS, we should have at least 250,000 NIS. It is important to know that the higher the percentage of bank financing, the higher the interest rates are, but if the percentage of financing requested by the bank is lower, the interest rates will be lower. It should be noted that if the percentage of financing that the borrowers have is low, it is worthwhile, before signing the purchase contract, to request approval in principle from the bank. </p>
+                                <br />
+                                <p><strong>When purchasing a new apartment from the contractor</strong>, check whether there is a lending bank for the project. The bank will transfer money to the contractor only after paying the shareholders' equity. Only after payment of shareholders' equity will the bank pay the contractor payments in accordance with the purchase contract. It is important to know - the amounts for financing will be determined according to the assessment of the Bank only. In other words, the percentage of financing will be according to <strong>the value determined by the appraiser </strong>and not to the amount appearing in the purchase contract.</p>
+                                <br />
+                                <p><strong>The monthly payment</strong> of the mortgage should not exceed 35% of the net disposable income. (Net income since the banks deduct from the balance of income expenses such as: loans / alimony, etc.). The repayment ratio is 30% to 40% at most (this is a variable that may change in different banks). </p>
+                                <br />
+                                <p><strong>It is important to know</strong> - a low monthly repayment does not necessarily indicate a mortgage built professionally and properly for the borrower. In most cases, a very low return indicates that the repayment is expected to rise significantly in the future and will also affect the customer's repayment ability in the future, and sometimes even lead to a substantial risk of non-payment. It is also important to understand that the shorter the period, the lower interest rates will be. What is most important is that the mortgage mix will be professionally assembled and customized according to the client's needs.</p>
+                                <br />
+                                <p>It is important to ensure that the <strong>financial conduct</strong> is correct and the credit history of the borrowers is not marked or has alerts.</p>
+                                <br />
+                                <p>The Bank is examining the<strong> employment continuity </strong>of the borrowers. Examines the repayment ability of the borrower to ensure that they can meet payments over time, since the mortgage is a long-term loan.</p>
+                                <br />
+                                <p>Therefore, the Bank requests all the relevant documents before submitting the papers and obtaining the approval in principle. There is a difference in submitting a salaried worker’s portfolio to a self-employee’s portfolio. The Bank requests for the first meeting your ID number, current account transactions for the last 3 months, details of loans and 3 salary slips and / or tax assessments for the self-employed.</p>
+                                <br />
+                                <p><strong>It's important to know</strong> - you should not go to a bank without a registered private consultant like you do not do a real estate transaction without an attorney. The process of taking a mortgage is complex, both procedurally and in terms of choosing the right mix. The assumption is that there is a conflict of interest between the bank and the borrower. The bank has an interest in making as much money as possible and it is important to pay as little money as possible and select the best routes that are <strong>available for you personally! </strong></p>
+                                <br />
+                                <p><strong>I will make sure you get the best mortgage for you! </strong></p>
+                                <br />
+                                <p><strong>Do not pay more than reality requires! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-3 -->
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Should I refinance the mortgage?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>The refinancing process<strong> means taking a new mortgage, with better terms, than your existing mortgage. </strong></p>
+                                <br />
+                                <p>Usually this is done when the interest rates are lower than at the time of taking the mortgage. The process of refinancing can save tens of thousands and up to hundreds of thousands of shekels. The new mortgage agreement must be examined, and make sure that it is <strong>tailored to the customer's </strong>,financial profile, A few things can be considered, one is shortening the period, increasing the monthly payment or reducing the monthly payment, all according to the level of the customer's income and the personal needs of each one.</p>
+                                <br />
+                                <p>In the refinancing process, it is possible to examine the increase in the value of the asset and the addition of a sum to the mortgage according to the customer's needs. </p>
+                                <br />
+                                <p>There is a wide range of activities that can be carried out in the mortgage cycle, taking care of the customer's personal interest and improving the standard of living and the economy of their home. An important detail to be addressed is the early repayment commission and to then examine the profitability of refinancing in a variety of courses. <strong> Usually, the higher the repayment commission, the higher the savings, because in this situation there is a bigger difference in the interest rates in the customer's benefit</strong> (between the mortgage taken and the interest rates that exist during the refinancing process).</p>
+                                <br />
+                                <p>The refinancing process requires understanding and professionalism. I will accompany you hand in hand and formulate the best way for you to take a<strong> personal mortgage</strong> with comprehensive accompaniment and solutions in a professional manner and strict discretion.</p>
+                                <br />
+                                <p>Do not hesitate - when there is doubt, there is no doubt! Leave your details and I'll get back to you as soon as possible.</p>
+                                <br />
+                                <p style="text-align:center;"><strong>* Free refinance test, free of commitment *</strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone have their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-4 -->
+                <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Early Repayment Fee - When do we pay?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>You want to repay the mortgage but do not know what commission you will have to pay on early repayment? Let me put it in order and help you understand how you can try to avoid unnecessary costs.</p>
+                                <br />
+                                <pThe mortgage is usually composed of several different tracks and each track has a repayment commission calculated differently.></p>
+                                <br />
+                                <p>1.<strong> <u> Operating commission: </u></strong> a fee that the Bank charges for operating a refund, and amounts to tens of shekels (about 60 NIS).</p>
+                                <br />
+                                <p>2. <strong> <u>Non-notification fee: </u></strong> The bank asks the borrower for a notice of at least 10 days prior to repayment of the mortgage. If the borrower will update 10 days in advance, he will not pay a commission, but if he does not notify, he will be charged 0.1% of the amount of the mortgage paid.</p>
+                                <br />
+                                <p>3. <strong> <u> Capitalization commission: </u></strong> (the most significant commission) When we took the loan from the bank, the bank undertook a certain interest at <strong>fixed interest</strong> (no matter whether it is a fixed interest rates / non-fixed interest / linked or unlinked interest every 5 years or more) Now to repay the loan, the bank will have to find a new borrower for the money, but if the interest rate at early redemption is <strong>lower</strong>, it means that the bank will <strong>benefit less</strong> and therefore demands <strong>to compensate itself for the difference. </strong> Because of these, we have committed ourselves to the bank, to pay a certain interest rate throughout the entire mortgage period, and at the time of early repayment we terminate the liability in the middle of the year.</p>
+                                <br />
+                                <p><strong>If so, how do you calculate the commission? </strong> When a customer wishes to make early repayment, the bank examines the average interest prevailing at that time in the market on the same loan track (for the remaining period). At the same time, it examines the average interest rate on the same track at the time of taking the loan, or the interest set for the customer - the lower of the two. After the examination, the <strong>Bank examines the difference between them: </strong></p>
+                                <br />
+                                <p><strong>If the current interest rate on the loan is low </strong>or equal to the interest at the time of taking the loan then the client <strong>will be charged a capitalization fee. </strong>If the interest rate is<strong> higher </strong>the client <strong>will not be charged</strong> for the difference.</p>
+                                <br />
+                                <p><u>For example </u>, if you took a 20-year mortgage at a 6% interest rate, which was the average interest rate in the market at the time. After 5 years you asked to refinance the mortgage and make an early repayment. The Bank will examine the average interest on a similar loan for 15 years, to the amount remaining. If the average interest rate stands at 7% for example, the bank will not charge you commission, since the interest rate is higher and the bank can lend your money to someone else without losing. On the other hand, if the interest rate is 4%, the bank will charge you a capitalization commission of 2%.</p>
+                                <br />
+                                <p><u>Another example </u> is that at the exit points defined in the tracks already in advance (for example, every 5 years), we will not pay a capitalization fee at the point of departure (after 5 years), but if we decide to repay the mortgage before the exit point, (For example, if we decide after 3 years to it pay off, we will pay only for the remaining two years to the point of departure). Of course, all this assuming that the interest rate is lower than what we took the mortgage - as I explained in the calculation of the capitalization fee shown above.</p>
+                                <br />
+                                <p><strong>Important highlights: </strong></p>
+                                <br />
+                                <p>In the tracks on a variable basis for a<strong> short period</strong> (such as prime, variable each year, foreign currency) <strong>there is no capitalization fee </strong>because we have pledged that the interest paid will change according to <strong>the interest rate changes in the economy. </strong></p>
+                                <br />
+                                <p>Eligibility loans do not have capitalization fees because this is a benefit from the state.</p>
+                                <br />
+                                <p>4. <strong>Average index fee (index-linked loans only): </strong></p>
+                                <br />
+                                <p><strong>In the average index fee</strong>, in the case in which an index-linked loan is repaid <strong>between the 1st of the month and the 15th of the month. </strong> Since the index is published on the 15th of each month, in a loan that was repaid in the previous days, the interest rate<strong> is actually unknown. </strong> Accordingly, <strong> the Bank charges a commission at the rate of 50% of the average increase of the previous 12 months </strong> (i.e., the borrower will pay half of the average index of the last 12 months). If it turns out that the index for that month was negative, stood at zero, or even positive, but less than the average calculated as the commission, <strong> then the customer actually paid a kind of fine. </strong></p>
+                                <br />
+                                <p>On the other hand, if you repay the mortgage<strong> between the 16th and the end of the month</strong> you will not <strong>pay a commission</strong>, but you have to take into account that on the 15th of that month<strong> the published index will be calculated on the mortgage. </strong></p>
+                                <br />
+                                <p><strong>It's important to know</strong> - if you expect <strong>the index to be high</strong> in the month you<strong> return the mortgage then return it before the 15th</strong>, because you will pay only the average index of last year. But if you think<strong> the index will be negative or low wait after the 16th of the month. </strong></p>
+                                <br />
+                                <p>5. <strong> Exchange rate differentials on foreign currency linked loans: (common loans) </strong></p>
+                                <br />
+                                <p>An additional commission is collected in the event that a foreign currency-linked loan is taken. The commission is the amount of exchange rate differentials between the foreign exchange rate on the day on which the early repayment was made and the rate that will occur two business days later <strong>If the borrower gives written notice of at least two business days Early</strong>, he is exempt from this commission.</p>
+                                <br />
+                                <p>The specialization is to build<strong> a tailor-made mortgage</strong>, according to the client’s needs, and to build an optimal mix that will be composed, inter alia, of tracks with no early repayment fees.</p>
+                                <br />
+                                <p><strong>I will accompany you hand in hand and formulate the best way for you with comprehensive financial support, professionally and with professional solutions that will give you peace of mind and confidence in the transaction. </strong></p>
+                                <br />
+                                <p><strong>Make sure you get the best mortgage for you, personally! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal-5 -->
+                <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Dragging a Mortgage - what is the process? And is it profitable?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Mortgage transfer is done when we buy a new property and sell an old one, and the terms in the current mortgage, of the old property, are with excellent conditions. In the act of transferring, we want the mortgage on the old house to be transferred to the new property and the terms of the mortgage to remain the same. Most of us will need to add money to buy the new property. (If the value of the new apartment is lower than the old property, we will need to get permission from the bank to do a transfer, because the value for collateral isn’t as good for the bank).</p>
+                                <br />
+                                <p><strong>It's important to know</strong> – mortgage transfer can increase your monthly payments, despite the conditions listed. That is not a problem, if your payment ability allows this, but if that is a problem, then the bank might not approve the transfer process and you will have to take a new mortgage for the full amount.</p>
+                                <br />
+                                <p>Another important thing to consider is that the bank, in which you are doing the transfer, can take advantage of the situation and will take its time and might not give you good interest rates on the additional amount that you need to add to the mortgage (which does not include the transferred funds). Therefore, if the offer you receive is not an attractive one, it is recommended to check an alternative offer, at another bank for the full amount (the transferred mortgage + the addition you need for the new property). </p>
+                                <br />
+                                <p><strong>The transfer process can be done in 2 ways, </strong></p>
+                                <br />
+                                <p><strong>If you already purchased</strong> an apartment then the bank transfers the mortgage to the new property and makes sure to update the collaterals accordingly.</p>
+                                <br />
+                                <p><strong>If you have not yet purchased</strong> a new property but have already sold the old house then the bank transfers the mortgage into a bank guarantee, and the buyer of your old property deposits the money in favor of the guarantee in your bank and not directly for you. The payment for the mortgage will continue, and when you buy the new property, the bank will transfer the money from the guarantee to your seller and mortgage the new property.</p>
+                                <br />
+                                <p><strong>I will make sure you get the best mortgage, suited for you, and I will accompany you, hand in hand, right until the final signing in the bank, with a personal, courteous and professional service. I will refer you to a professional insurance agent who will take care of you, and offer an attractive and worthwhile offer. </strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-6 -->
+                <div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Insurance – what kind of insurance does the bank require and what is important to know?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>When we take a mortgage from the bank, we are required to make two types of insurance: life insurance and structural insurance.</p>
+                                <br />
+                                <p><strong>Structural insurance</strong> is actually insurance of the apartment. When buying this insurance through the bank, it should be noted that the building insurance <strong>does not include a third party</strong> (third-party apartment insurance is designed to protect you from damage caused in various cases, such as dampness in the walls of the neighbor that comes from your bathroom or someone who has slipped on the stairs in your house).</p>
+                                <br />
+                                <p><strong>Life insurance </strong>is intended in case of inability to repay as a result of a death. The insurance company will pay the mortgage in case of death.</p>
+                                <br />
+                                <p><strong>It is important to know</strong> - when buying the insurance from a bank, you should get another offer from an external insurance agent and make sure that it includes the maximum coverage.</p>
+                                <br />
+                                <p><strong>I will make sure you get the best mortgage, suited for you, and I will accompany you, hand in hand, right until the final signing in the bank, with a personal, courteous and professional service. I will refer you to a professional insurance agent who will take care of you, and offer an attractive and worthwhile offer. </strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-7 -->
+                <div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Construction Inputs Index - Is there such an Index???</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Many people do not know about the existence of the construction inputs index. After we understand what the construction inputs index is and to whom it relates, we will examine whether it really constitutes a significant threat in the differences when signing the contract and the actual payment to the contractor.</p>
+                                <br />
+                                <p>The construction inputs index measures how much it costs to building, and then determines the basket price. It measures the changes in the expenses that are required to purchase materials, products, etc., which are used to build residential buildings, and represents the composition of construction expenses of the contractors. This index is published and calculated every 15th of the month. The current basket price, relative to the price of the previous basket, reflects the increase in the index in percentages relative to the previous month.</p>
+                                <br />
+                                <p>The construction inputs index refers mainly to apartment purchasers from the contractor. These purchasers pay the cost of the apartment in installments (as appears in the purchase contract), and these payments are linked to the construction inputs index. This index has a huge impact on purchasers of new apartments and payments to the contractor may change scientifically, with amounts that were probably not taken into account before the acquisition.</p>
+                                <br />
+                                <p>That is why homebuyers should follow this measure to understand how much their debt has increased and to calculate whether they should pay the contractor early or delay payment as much as possible. Whether to advance the mortgage, or save in the meantime each month and transfer higher equity to the contractor? The question arises which is higher? Construction Input Index or Interest on the Mortgage? The purpose of buying the property is also significant when examining the feasibility of advancing or postponing payments to the contractor.</p>
+                                <br />
+                                <p><strong>It is important to know</strong> that the construction inputs index is more expensive than the consumer price index. Try to ask the contractor for linkage to the consumer price index and not to the construction inputs index. This index also expresses the costs of the contractor. The construction inputs index does not reflect the costs of the land and the profit of the developer, but only the construction costs, but despite everything, the index is also calculated on them. There is a gap we are paying for, and unfortunately, the issue is still unresolved.</p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p><strong>I will make sure you get the best mortgage for you, tailor made! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-8 -->
+                <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Tax.... Purchase ... And everything in between ..!</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                               <p>Purchase tax applies to the buyer and is paid for when purchasing an apartment. Purchase tax does not apply to profits and is paid to the tax authority when purchasing a real estate asset. The tax is paid on the investment itself, in accordance with the purchase tax brackets (as opposed to the betterment tax that applies to the seller when the asset is sold and calculated by an assessor).</p>
+                               <br />
+                               <p>The tax authorities understand that sometimes, before the buyer sells the previous apartment, he buys a new apartment, and then there is a certain period that he owns two apartments. This is a short term that constitutes an intermediate term until the sale date, and therefore the tax authorities exempt the buyer from purchase tax on the apartment if he sells the apartment within a year.</p>
+                               <br />
+                               <p>Purchase tax is paid according to the tax brackets. The higher the purchase transaction, the higher the tax and its rate. The purchase tax method allows for payment according to the scope of the transaction, so that in transactions for the purchase of apartments in a low volume, the purchase tax, respectively, is low and in many cases, there is no purchase tax.</p>
+                               <br />
+                               <p>Everyone pays purchase tax but if you buy a first apartment, or if you improve housing and sell the previous apartment within two years then the tax will be reduced relative to second / third apartment buyers and so on.</p>
+                               <br />
+                               <p>Purchase tax brackets are updated once a year on January 15th.</p>
+                               <br />
+                               <p><strong>tax brackets when purchase a first apartment</strong></p>
+                               <br />
+                               <p><strong>0%</strong> on the part of the value up to <strong>1,744,505 NIS. </strong></p>
+                               <br />
+                               <p><strong>3.5%</strong> on the scale between<strong> 1,744,505 NIS to 2,069,205 NIS. </strong></p>
+                               <br />
+                               <p><strong>5%</strong> on the scale between <strong>2,069,205 NIS and 5,338,290 NIS. </strong></p>
+                               <br />
+                               <p><strong>8% </strong>on the scale between <strong>5,338,290 and 17,794,305 NIS. </strong></p>
+                               <br />
+                               <p><strong>10%</strong> above<strong> NIS 17,794,305. </strong></p>
+                               <br />
+                               <p><strong>tax brackets when purchase a second apartment</strong></p>
+                               <br />
+                               <p>The tax is paid when the buyer already owns an apartment and buys another apartment in his name. <strong>It is important to know</strong> - the purchaser of another apartment that sells an existing apartment within 24 months, will be charged with a lower purchase tax rate - as if this is his only apartment.</p>
+                               <br />
+                               <p><strong>8% tax up to 5,194,225 NIS. </strong></p>
+                               <br />
+                               <p><strong>10% above 5,194,226 NIS. </strong></p>
+                               <br />
+                               <p><strong>Purchase tax on land / land is 6%</strong>. Any purchase of land or rights to a real estate that does not fall to the definition of an apartment, will be taxed. <strong>It is important to know</strong> that if a land is purchased and at the date of the purchase transaction, it has a building plan, allowing at least one residential building or land for which a building permit has been received for, within two years from the date of purchase of the land, then the purchase tax will be<strong> 5%.</strong></p>
+                               <br />
+                               <p><strong>Evacuation for construction plan</strong> - the apartment received by the tenant from the developer in the evacuation or construction area, in exchange for his old apartment in the complex – is exempt from purchase tax.</p>
+                               <br />
+                               <p><strong>Transfer of property between spouses in a divorce proceeding </strong>- this action is not considered a real estate transaction and therefore there is no purchase tax on it.</p>
+                               <br />
+                               <p><strong>I will make sure you get the best mortgage, suited for you, and I will accompany you, hand in hand, right until the final signing in the bank, with a personal, courteous and professional service. I will refer you to a professional insurance agent who will take care of you, and offer an attractive and worthwhile offer. </strong></p>
+                               <br />
+                               <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                               <br />
+                               <p><strong>Clarification: </strong>The above information does not constitute legal advice and does not exhaust all the requirements and conditions for executing transactions. The contents of this article are provided as a service to the public and do not constitute a substitute for consulting with an attorney.</p>
+                               <br />
+                               <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-9 -->
+                <div class="modal fade" id="myModal9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Reverse mortgage</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Have you reached the age you can begin? If you are 60 years old and you own a property then this mortgage is just for you!</p>
+                                <br />
+                                <p>The mortgage is for borrowers aged 60 to 94. You ask how it is possible? In all banks, the age limit for a mortgage amounts to 75 (80 if I exaggerate)</p>
+                                <br />
+                                <p><strong>So, what is the logic and how does it happen? </strong></p>
+                                <br />
+                                <p>It is very important to understand that a reverse mortgage is for the precious golden age who are interested in removing an existing mortgage / helping children / repaying loans / moving to protected housing / renovations, etc. (If I simplify it, then I mean the loan is for any purpose at large sums of money).</p>
+                                <br />
+                                <p>In this mortgage, the percentage of financing is determined according to the age of the borrowers and the asset must be in the name of the borrowers who live in the property. This loan does not check for income but only the property's condition. The loan is not conditional upon the purchase of life insurance and is subject to the approval of the financing body.</p>
+                                <br />
+                                <p>The loan is repayable in two ways: a balloon loan until the last of the spouses passes away, or a monthly payment of interest only linked to the CPI and monthly management fees. There is no repayment commission on the loan.</p>
+                                <br />
+                                <p>When the last borrower passes away, the heirs undertake, within one year, to repay the loan by taking a mortgage on the property or alternatively to sell the property and share the rest of the sale money after payment of the debt to the financing body.</p>
+                                <br />
+                                <p>It is important to understand that the very fact that you own an asset that can be mortgaged constitutes sufficient security for the lender to provide you with a loan for your personal needs.</p>
+                                <br />
+                                <p><strong>I will make sure you get the best mortgage for you, so that you can live in peace and peace of mind! </strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-10 -->
+                <div class="modal fade" id="myModal10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Price per occupant / target price</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>How to take a mortgage on apartments for the price of occupant price plan? Should the value of the apartment be taken into consideration, as written in the contract?</p>
+                                <br />
+                                <p>Apartment purchasers receive a maximum of 75% financing / mortgage, while purchasers of apartments in the occupant price plan will benefit from significant financing rates, and this is not a trivial matter. These buyers have a double benefit because, beyond buying cheaper apartments, they do not have to pay high equity as other buyers need, when buying apartments.</p>
+                                <br />
+                                <p>In many cases, they will be required to own equity of only 100 thousand nis, and the percentage of financing that they will be able to receive will amount to 85% to 90% of the market value, i.e., the assessor's valuation value (and not as recorded in the purchase contract as mentioned above).</p>
+                                <br />
+                                <p>The high rates of financing are provided because buying at a price per occupant program is not the actual price / market price of an apartment for that area. On the face of it, the price per occupant program has very low rates of financing, but in relation to the real price of the apartment, it may be significantly lower. The Finance Ministry and the Bank of Israel have determined that it is not possible to approve 100% financing from the value of the property in the occupant price plan (although the percentage of financing is still very high and theoretically not far from that).</p>
+                                <br />
+                                <p><strong>Important information to know </strong>– The things that banks find important for securing the loan, is the real value of the property (as estimated appraiser) and not how much the apartment was bought for, under the purchase contract.</p>
+                                <br />
+                                <p>The conditions for obtaining a mortgage for the occupant are identical to the process of receiving a "regular" mortgage, and the purchasers must meet the usual mortgage checks of the banks.</p>
+                                <br />
+                                <p>You should contact the bank branches that know the area, otherwise it will be difficult to receive the mortgage money. Moreover, there should be no difference in interest rates for apartment buyers at the of occupant plan.</p>
+                                <br />
+                                <p><strong>It is important</strong> to consider purchasing an apartment at a price of occupant plan as a regular real- estate purchase. A couple who have won the raffle, will wait about 5 years before entering the apartment, so it is recommended to calculate the cost of the rent plus the cost of the property and examine the feasibility of the transaction. It is not clear which apartment the winners of the raffle will receive and whether it suits their personal needs, you will know the size of the apartment, what floor it is on, etc. after you are invited to a personal meeting to choose an apartment and sign the contract, there were quite a few people who had to give up the winning and decided not to buy the apartment because the remaining apartments did not meet their needs or did not match the budget.</p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p><strong>I will arrange for you to get the best mortgage for you, tailor made, and make sure the procedure is simple, efficient and economical. </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-11 -->
+                <div class="modal fade" id="myModal11" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Prepare yourselves for self- construction!</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Have you decided to build your dream house? Congratulations!</p>
+                                <br />
+                                <p>Self-construction involves many uncertainties, and many decisions must be made, including dealing with bureaucracy and professionals. In order for the dream not to become a nightmare, it is important that you prepare correctly and carry out preliminary planning that will include unexpected expenses and enable you to make an efficient and correct financial decision. The difficulty with self-constructed is the ability to anticipate the amount that is required to pay in total. Estimating the costs will help determine the scope of the construction and the level of finishes to the house.</p>
+                                <br />
+                                <p>Prepare a plan that will be as close to reality as possible and that way the surprises in the continuation of construction will be minor. Prepare a plan that includes<strong> the cost of land</strong>, when buying land from the Israel Land Administration you will have to add the cost of land development, <strong>the construction cost</strong> (the cost of sq. meter X number of built square meter), <strong> and additional costs</strong> such as: purchase tax, betterment tax, fees for attorney, real-estate brokerage fees, financing costs, linking costs to the consumer price index or to the construction inputs index, delays in the timetables, fees and forms, the cost of construction supervisor, engineer, fees for architects and other professionals; the contents of the building: furniture, kitchen and sanitary equipment, etc.</p>
+                                <br />
+                                <p>In addition, there are one-time payments when buying the mortgage, such as appraisals, registration of collateral, fees for the bank, fees for a mortgage advisor, and if there are any irregularities in the budget, they affect the amount of the mortgage and the monthly repayment.</p>
+                                <br />
+                                <p><strong>When purchasing the land</strong>, you are not required to present any building plans or permits to the bank, and the money will be paid directly to the contractor in one run. <strong>During the construction</strong> phase you will be required to present detailed plans for the house, contractor plans, construction supervisor, etc., and the funds will be transferred to your account gradually. The mortgage money will be released gradually according to the progress of the construction, according to an engineer's approval or up to the current amount approved by the Bank for self-construction.</p>
+                                <br />
+                                <p><strong>It is important to know: </strong> In a mortgage for self-construction it is always advisable to ask for a higher amount of the initially planned amount, so that you can use it if you have exceeded the budget. You will not pay for the entire approved framework, but only for the amount you took. The Bank will usually approve up to 75% financing for the purchase of the plot and up to 60% mortgage for construction, in order to minimize risks if you exceed the budget. The bank will always prefer to stay with a safety margin. The Bank is not obliged to approve, but usually will prefer to approve additional financing in order to have an asset in his favor, in respect of the credit.</p>
+                                <br />
+                                <p>Self-construction requires you to deal with high costs in the early stages and invest a lot of time and resources, but eventually you will get a home that is perfectly suited to your unique needs and live your dream.</p>
+                                <br />
+                                <p><strong>I will get you the best conditions, at each step, to realize your dream! </strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-12 -->
+                <div class="modal fade" id="myModal12" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Tama 38</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>Tama 38 is a national master plan for strengthening existing buildings against earthquakes, it was prepared at the initiative of the National Planning and Building Council, due to the location of the State of Israel on the Syrian-African Rift Line, which is at high risk of earthquakes.</p>
+                                <br />
+                                <p>The purpose of the plan is to provide an economic incentive to strengthen buildings (built before 1980) by granting increased building rights and shortening the bureaucratic procedures for obtaining building permits without the need to prepare a detailed plan, thereby encouraging homeowners to strengthen the structures they own.</p>
+                                <br />
+                                <p>This means strengthening the existing building and adding up to two floors (usually a regular floor and another floor for a penthouse or two roof apartments with an exit to the roof). In return, the tenants receive an additional room in the form of a security room and an elevator (buildings that have been allowed to be built after this date are subject to reinforcement instructions only without additional building rights).</p>
+                                <br />
+                                <p>As part of this project (TAMA 38/1), tenants enjoy many advantages, this is an original and quick way to improve the value of the property at no cost to the tenants, and all the expenses related to the execution of the project are paid by the developer. (Tama 38/ 2) the owner of the existing apartment receives a rent refund for the construction period until occupancy in the new apartment.</p>
+                                <br />
+                                <p>Despite the high importance of the project, TAMA 38 was implemented in a small way, mainly due to the entrepreneur's financing difficulties, and the construction of the buildings is subject to building rights on the roofs of the buildings. The project turned out to be complex, because the roofs cannot be mortgaged and if the entrepreneur enters difficulties and becomes insolvent, the project will not succeed and the bank will have no collateral to realize. (These are construction rights and not rights to the land itself, and therefore there is difficulty in providing collateral to the bank as a condition for financing the project).</p>
+                                <br />
+                                <p>This is a project that requires real professionalization in the field and it is very important to consult with the right professionals.</p>
+                                <br />
+                                <p><strong>I will formulate the best way for you to take a custom mortgage and a comprehensive financial loan. </strong></p>
+                                <br />
+                                <p><strong>When people ask me what is a good mortgage? I usually answer: a custom-tailored mortgage, because everyone has their own personal house! </strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-13 -->
+                <div class="modal fade" id="myModal13" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>Purchase groups</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>A purchasing group is a group of individuals that together form a "partnership agreement" in order to purchase land and build a residential building on it, in order to reduce costs. A purchasing group can organize itself or through a management company that organizes all the stages of purchase and construction. The Group enables its members to reduce the brokerage gaps in purchasing the property as a finished product. On the other hand, the risk of participation in initiating the project is usually greater than the risk of buying one of the apartments, and the final price is not guaranteed. As stated, a purchasing group is an entrepreneurial entity in all respects, with all the risks and complications involved in real estate ventures.</p>
+                                <br />
+                                <p>Bank financing and a credit framework for the project as a whole are required, and each member of the group is examined individually to obtain approval from the lending bank. A member who has all the shareholders' equity required for the transaction must also open a credit facility at the lending bank. This is a safety net that will not create financing problems during the project.</p>
+                                <br />
+                                <p>The mortgage money of the members of the purchasing group is paid to the contractors and the professionals, according to the pace of the construction progress. The Bank treats each customer as a project entrepreneur and therefore the financing costs are high relative to a private person who takes out a mortgage.</p>
+                                <br />
+                                <p>The group locates the land, recruits the potential buyers, receives bids from the contractors and the professionals, and conducts them. The selection of professionals is very significant in a project of this type, and their choice should not be taken lightly. The cooperation between the parties is critical and decisive, and this is a complex process that requires in-depth financial planning from the beginning of the project.</p>
+                                <br />
+                                <p><strong>I will accompany you hand in hand with comprehensive financial assistance and ensure that the procedure is simple, efficient and economical. Your desires, interests and needs become my goal.</strong></p>
+                                <br />
+                                <p>The article was written by Shiran Bar-Oz, Counseling, Real Estate, Mortgage and Finance.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+</section><!--main-section-end-->
+<section style="background-color: #ffffff;height: 2px"></section>
+<!--<section style="background-color: #000000;height: 30px"></section>-->
+<section style="background-image: url(img/WhiteBricks.jpg);height: 100px;"></section>
+
+<section class="main-section client-part" id="calc" style='min-height: 75%;display: flex;align-items: center;'><!--main-section client-part-start-->
+	<div class="container">
+		<b class="quote-right wow fadeInDown delay-03"><i class="fa-quote-right"></i></b>
+    	<div class="row">
+        	<div class="col-lg-12">
+            	<p class="client-part-haead wow fadeInDown delay-05" style="direction:ltr;">When I'm asked what is a good mortgage? I usually answer... 
+                <br /><strong>CUSTOM MORTGAGE!</strong> <br />Each one of us has his own unique HOME !</p>
+            </div>
+        </div>
+    	<ul class="client wow fadeIn delay-05s">
+        	<li><a href="#">
+            	<img src="img/shiran.jpg" alt="">
+                <h3 style="font-size: x-large;">SHIRAN BAR-OZ</h3>
+                <span>.Counseling, Real Estate, Mortgage and Finance</span>
+            </a></li>
+        </ul>
+    </div>
+</section><!--main-section client-part-end-->
+<div class="c-logo-part" style="background-image: url(img/WhiteBricks.jpg)"><!--c-logo-part-start-->
+	<div class="container">
+    	<ul>
+            <li><a class="btn btn-primary" target="_blank" href="https://ecom.gov.il/voucherspa/input/440?clear=true" id="calcbutton">Producing a Plot of Land </a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://mapi.gov.il/Pages/LotAddressLocator.aspx" id="calcbutton">Locating a Block & Dividing it by Address</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://fileextractor.justice.gov.il/tabu" id="calcbutton">The Drawing of a Condominium</a></li>                                    
+        </ul>
+        <br/>
+        <ul>
+            <li><a class="btn btn-primary" target="_blank" href="calc.html" id="calcbutton">Entitlement Calculator</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://www.dira.gov.il/Pages/HomePage.aspx" id="calcbutton">Price of the Occupant</a></li>        	           
+            <li><a class="btn btn-primary" target="_blank" href="https://www.misim.gov.il/svsimurechisha/frmFirstPage.aspx?cur=1#nbb" id="calcbutton">Purchase Tax</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="https://www.misim.gov.il/svtsvazmitnew/frmPrivateDetails.aspx" id="calcbutton">Betterment Tax</a></li> 
+        </ul>   
+	</div>
+</div><!--c-logo-part-end--> 
+
+    
+    
+<section id="nicetomeet" style="background-color: #ffffff;min-height: 70%;">
+    <div id='nicetomeetdiv' style='direction:ltr;'>
+		<p>A pleasure to meet you! my name is Shiran Bar-Oz, a mortgage counselor registered with the Association of Mortgage Advisors. In addition to being a mortgage advisor, I have the knowledge and experience from variety of occupations during my life, which serve as a significant tool to provide you with the best possible service to create a <strong> mortgage tailored to your financial profile. </strong> I was involved in a number of areas of my life, but when I was in the mortgage business I realized that I was in the right place.</p>
+		<br />
+        <p>I invite you to enter into the great financial deal of your life in peace. The mortgage-taking process among many customers is accompanied by hesitations and fears. I will negotiate with banks for you and save you time and unnecessary bureaucracy. <strong> In the end it is important for you to pay as little money as possible in custom solutions for you! With a custom mortgage</strong>, I will make the process efficient, simple, and will give you tranquility and peace of mind, along with professionalism, transparency and availability, accompanying every step with the bank.</p>
+		<br />
+        <p>I have acquired 16 years of professional experience in banking, mortgage and real estate.</p>
+		<br />
+        <p>Since I was discharged from the army I worked at Bank Hapoalim for 12 years as a business department manager and over the years I have accumulated knowledge in variety of fields.</p>
+		<br />
+        <p>I have an MBA in Finance and Human Resources; Graduate of the Psagot College and focus Mortgage Academy, and I also have a brokerage license from the time I engaged in real estate.</p>
+		<br />
+        <p>In addition to being a native speaker of "banking language", I work with advanced financial software in the field that enable me to achieve the best conditions with great financial savings while ensuring that a customized mix is built for your personal and financial needs.</p>
+        <br />
+        <p>Hand in hand we will walk to the best mortgage for you personally.</p>
+        <br />
+        <center><a class="btn btn-primary btn-block" target="_blank" href="certificates.html">My Certificates</a></center>
+        <center style="padding-top:10px;"><a  class="btn btn-primary btn-block" data-toggle="modal" data-target="#recommendationsmodal">Recommendations</a></center>
+	</div>
+</section>
+
+<section class="business-talking"  style="background-image: url(img/WhiteBricks.jpg)">
+	<div class="container">
+    	<div class="row">
+        	<div class="client-part-haead wow">
+				 <div style="text-align:center;font-size:large;color:#000000;direction:ltr;">
+                    <p><strong>Dont Pay more than Reality forces you !</strong></p>
+                    <p>In your most important transaction, <strong> use private advice - it pays! </strong></p>
+                    <p style="padding-bottom: 10px;">A mortgage is only taken with a registered consultant who works for you and saves your money.</p>
+                    <p>You are Welcome to Contact me: </p>
+                    <p><strong>Shiran Bar Oz +972-52-5787000</strong></p>
+                </div>	
+			</div>
+        </div>
+    </div>
+    	<div class="modal fade" id="recommendationsmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content" style="direction:ltr;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel" style="color:#67217f;">Recommendations</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p><strong>Shay and Vika Shlis, Oranit:</strong></p>
+                                <p><i class="fa fa-quote-left" aria-hidden="true"></i>We thought we did our homework and that we do not need any advice, there are only interest and periods, and it sounds easy, but you will not believe, it is a world that requires knowledge, planning and professionalism.  We turned to Shiran in the last minute, and she was there for us with total availability and service, and at the end, we saved money and shortened our repayment period with proper planning. We strongly recommend Shiran, she is a combination of professionalism and service! <i class="fa fa-quote-right" aria-hidden="true"></i></p>
+                                <br />
+                                <p><strong>Yehudit Levin, Em Hamoshavot - Petach Tiqva:</strong></p>
+                                <p>
+ <i class="fa fa-quote-left" aria-hidden="true"></i>Dear Shiran: In two meetings and ten days between them, you managed to erase my fear of mortgage I had for the last twenty-years 😊<br />
+You have made the (complex) process, to easy, professional, efficient, and most importantly functional, fast and economical.<br />
+The peace of mind and the excellent result I have achieved in a minimum of time attest once again that with such a small investment it is possible to receive such a high reward.<br />
+Many thanks and assures you that the next phone call is for you! Thank you! <i class="fa fa-quote-right" aria-hidden="true"></i></p>
+                                <br />
+                            <p><strong>Levi Ariel and Neta, Bnei Brak:</strong></p>
+                            <p><i class="fa fa-quote-left" aria-hidden="true"></i> In the wider world professionalism, reliability and service are just an advertisement words, but with Shiran it's a fact.<br />
+And most important of all, is the dedication and caring that Shiran shows her customers. <br />
+We are part of a very satisfied customer base. And we warmly recommend her, to those who have not yet found or are not satisfied with the one they work with. <br />
+Do not think twice because we have found you the best person possible for this job. <br />
+You can be confident and relaxed that you are in good hands, loyal and devoted. <br />
+Who will dedicate all her heart to you. <br />
+We thank and appreciate you with all of our heart: Ariel and Neta Levi. <br />
+Phone numbers: 1) 054-8413834<br />
+ 2) 052-7112409 
+ <i class="fa fa-quote-right" aria-hidden="true"></i></p>
+                            <br />
+                            <p><strong>Yorek and Zaban Shamlov, Tel Aviv:</strong></p>
+                            <p><i class="fa fa-quote-left" aria-hidden="true"></i> Dear Shiran!<br />
+We, the Shmalov family, would like to thank you for the dedicated treatment, the courteous attitude and the excellent service. <br />
+We wanted to move to a more comfortable apartment with an elevator and improve the quality of our  life economically, and when we approached you, we found us a creative solution that also upgraded the quality of our life! <br />
+We strongly recommend taking Shiran's services – you will only profit from it! 
+ <i class="fa fa-quote-right" aria-hidden="true"></i></p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="color:#67217f;">Close</button>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+</section><!--main-section client-part-end-->
+<div class="container">
+<section class="main-section contact" id="contact">
+	    <div style="margin-right:auto;margin-left:auto;text-align:center;">
+            <h3 style="font-weight: bold;font-size: 23px;color:#999999;">For a custom mortgage</h3>
+            <h3 style="font-weight: bold;font-size: 23px;color:#999999;direction:ltr;">Contact us or leave details</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-5 wow">
+                <h2 style="font-size: 18px;direction:ltr;color:#999999;">To coordinate a consultation meeting,<br /> write to us...</h2>
+            	<div class="form">
+                	
+                    <div id="sendmessage">Message sent! Thank you!</div>
+                    <div id="errormessage"></div>
+                    <form action="?" method="post" role="form" class="contactForm" style="direction:ltr;">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control input-text" id="name" placeholder="Full Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                            <div class="validation"></div>
+                        </div>
+                         <div class="form-group">
+                            <input type="text" name="phone" class="form-control input-text" id="phone" placeholder="Phone" data-rule="minlen:9" data-msg="Please enter at least 9 chars" />
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control input-text" name="email" id="email" placeholder="Email" data-rule="email" data-msg="Please enter a valid email" />
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group" style="color:#000000">
+                            <h3>Regarding:</h3>
+                            <input type="radio" name="subject" value="new" checked>New Mortgage<br>
+                            <input type="radio" name="subject" value="cycle">Mortgage Recycling<br>
+                            <input type="radio" name="subject" value="financial">Financial Escort, Loan for all purpose<br>
+                            <input type="radio" name="subject" value="mortgagemix">Mix only<br>
+                            <input type="radio" name="subject" value="other">Other<br>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control input-text text-area" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message..."></textarea>
+                            <div class="validation"></div>
+                        </div>
+                        
+                        <div class="text-center"><center><button type="submit" value="submit" class="btn input-btn">Send message</button></center></div>
+                    </form>
+                </div>	
+            </div>
+        	<div class="col-lg-6 col-sm-7" style="top: 42px;">
+                <div class="contact-info-box phone clearfix" style="direction:ltr;">
+                	<h3><i class="fa-phone"></i> Phone:</h3>
+                	<span>052-5787000</span>
+                </div>
+                <div class="contact-info-box email clearfix" style="direction:ltr;">
+                	<h3><i class="fa-pencil"></i> Email:</h3>
+                	<span>barozshiran@gmail.com</span>
+                </div>
+            	<div class="contact-info-box hours clearfix" style="direction:ltr;">
+                	<h3><i class="fa-clock-o"></i> Activity &emsp;&emsp; Hours:</h3>
+                	<span><strong>Sun-Thu: </strong>09:00-19:00<br><strong  style="margin: 11;">Fri:</strong> 09:00-12:00<br></span>
+                </div>
+                <div class="contact-info-box address clearfix" style="direction:ltr;">
+                	<h3><i class="fa fa-map-marker"></i> Address:</h3>
+                	<span>9, Derech Eden st. Entrance C, Floor number 2, Rishon Le Zion</span>
+                </div>
+                <ul class="social-link" style="padding-left: 40%;">
+                    <li><a href="https://www.facebook.com/barozshiran/" target='_blank'><img src='img/facebookLogo.png'/></a></li>
+                    <li><a href="https://instagram.com/shiranbaroz" target='_blank'><img src='img/instagramLogo.png'/></a></li>
+                    <!--
+                    <li class="facebook"><a href="https://www.facebook.com/barozshiran/"><i class="fa-facebook"></i></a></li>
+                    <li class="instagram"><a href="https://instagram.com/shiranbaroz"><i class="fa-instagram"></i></a></li>                    
+                    -->
+                </ul>
+                <video id="vid" controls autoplay muted style="width:400px;height:400px;padding-bottom: 150px;">
+                        <source src="/Videos/shiran.webm" type="video/webm">
+                        <source src="/Videos/shiran4-HD.mp4" type="video/mp4">
+                </video>  
+            </div>
+        </div>
+</section>
+</div>
+<div>
+    <p style="text-align:center;color:#000000;padding-top:-30px;">Web Developer - Oren Zehavi &copy;</p>
+    <p style="text-align:center;color:#000000;">ozehavi@gmail.com</p>
+
+</div>
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        $('#test').scrollToFixed();
+        $('.res-nav_click').click(function(){
+            $('.main-nav').slideToggle();
+            return false    
+            
+        });
+        
+    });
+</script>
+
+  <script>
+    wow = new WOW(
+      {
+        animateClass: 'animated',
+        offset:       100
+      }
+    );
+    wow.init();
+  </script>
+
+<script type="text/javascript">
+	$(window).load(function(){		
+		$('.main-nav li a, .servicelink').bind('click',function(event){
+			var $anchor = $(this);
+			
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top - 102
+			}, 1500,'easeInOutExpo');
+			/*
+			if you don't want to use the easing effects:
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top
+			}, 1000);
+			*/
+			event.preventDefault();
+		});
+	})
+</script>
+
+<script type="text/javascript">
+
+$(window).load(function(){    
+  var $container = $('.portfolioContainer'),
+      $body = $('body'),
+      colW = 375,
+      columns = null;
+
+  
+  $container.isotope({
+    // disable window resizing
+    resizable: true,
+    masonry: {
+      columnWidth: colW
+    }
+  });
+  
+  $(window).smartresize(function(){
+    // check if columns has changed
+    var currentColumns = Math.floor( ( $body.width() -30 ) / colW );
+    if ( currentColumns !== columns ) {
+      // set new column count
+      columns = currentColumns;
+      // apply width to container manually, then trigger relayout
+      $container.width( columns * colW )
+        .isotope('reLayout');
+    }
+    
+  }).smartresize(); // trigger resize to set container width
+  $('.portfolioFilter a').click(function(){
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+ 
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+			
+            filter: selector,
+         });
+         return false;
+    });
+  
+});
+
+</script>
+
+</body>
+</html>

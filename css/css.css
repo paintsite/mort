@@ -1,0 +1,110 @@
+ @media (max-width: 800px) {
+      #firstlogo {
+        width: 10%;
+      }
+    }
+   html{
+        width: 100%;    
+    }
+    body{
+        direction: rtl;
+    }
+    .modal-title{
+        color:#000000;
+    }
+    i{
+        font-family: 'FontAwesome';
+        font-weight: normal;
+        font-style: normal;
+    }
+    #floatright{
+        float: right;
+        display: inline-block;
+    }
+    #floatleft{
+        float: left;
+        display: inline-block;
+    }
+    .modal-footer{
+        text-align: left;
+    }
+    .footertext{
+        color:#000000;
+    }
+    .headertext{
+       font-family: 'Montserrat', sans-serif;
+	   font-weight:700;
+	   padding:0;
+	   margin:20px 0 70px;
+	   text-transform:uppercase;
+	   font-size:42px;
+        color:#fff;
+    }
+
+    #startbutton{
+        border-radius: 3%;
+        margin-right:50px;
+    }
+    #main-nav{
+        margin-left: -20;margin-right: -20;
+    }
+    .modal-body{
+        color: black;
+    }
+    .close{
+         float:left;
+    }
+	#nicetomeet{
+		color: black;
+		text-align: center;
+		background:#fafafa;
+	}
+	#nicetomeetdiv{
+		padding: 30 100 30 100;
+	}
+	#firstlogo{
+		max-width:250%;
+		height:300px;
+		width:340;
+		padding-left:20px;
+		margin-right:-40px;
+        padding-left: 0px;
+        margin-right: -75px;
+        margin-top: 100px;
+	}
+	#menulogo{
+		width:120px;
+		height:100px;
+		margin-top:-20px;
+	}
+    .main-nav li a {
+        font-size: larger;
+    }
+    .graphtitle{
+        font-family: 'Montserrat', sans-serif;
+        color:#222222;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    #articletext{
+        color: #ffffff;
+        font-weight: bold;
+    }
+    #serviceheadline{
+        font-weight: bold;
+        font-family: 'Montserrat', sans-serif;
+        color:#000000;
+        font-size: 16px;
+    }
+    #calcbutton{
+        font-weight: bold;
+        color: #67217f;    
+        background-color: #cccccc;
+        border-color: #cccccc;
+    }
+    #calcbutton:hover{
+        font-weight: bold;
+        color: #67217f;
+        background-color: #ffffff;
+        border-color: #ffffff;
+    }

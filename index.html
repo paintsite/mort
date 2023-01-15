@@ -1,0 +1,1348 @@
+<!-- <?php
+require 'vendor/autoload.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["name"])) {
+        $error = urlencode('Error! Name is required.');
+        header("Location: 
+
+contact.php?error=$error");
+        exit();
+      $nameErr = "Name is required";
+    } else {
+      $name = 
+
+$_POST["name"];
+    }
+    
+    if (empty($_POST["phone"])) {
+        $error = urlencode('Error! Phone is 
+
+required.');
+        header("Location: contact.php?error=$error");
+        exit();
+      $nameErr = "Phone 
+
+is required";
+    } else {
+      $phone = $_POST["phone"];
+    }
+    
+    if (empty($_POST["subject"])) {
+    $error = urlencode('Error! Subject is required.');
+        header("Location: contact.php?error=
+
+$error");
+        exit();
+      $nameErr = "Subject is required";
+    } else {
+      $reason = $_POST
+
+["subject"];
+    }
+
+    if (empty($_POST["email"])) {
+      $emailErr = "Email is required";
+      $error = 
+
+urlencode('Error! Email is required.');
+        header("Location: contact.php?error=$error");
+        
+exit();
+    } else {
+      $email = $_POST["email"];
+      // check if e-mail address is well-formed
+      
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $emailErr = "Invalid email format"; 
+        
+$error = urlencode('Error! Invalid email format.');
+        header("Location: contact.php?error=
+
+$error");
+        exit();
+      }
+    }
+   
+    if (empty($_POST["message"])) {
+      $message = "message is 
+
+required";
+            $error = urlencode('Error! message is required.');
+        header("Location: 
+
+contact.php?error=$error");
+        exit();
+    } else {
+      $message = $_POST["message"];
+    }
+      if($nameErr== '' and $emailErr== ''){
+     
+        $from = new SendGrid\Email(null, $email);
+        
+$subject = "שירן! התקבלה הודעה מלקוח!";
+        $to = new SendGrid\Email(null, "barozshiran@gmail.com");
+
+$content = new SendGrid\Content("text/plain", "sent from: ". $name . "\r\n subject:" . $reason. "\r\n phone: " . $phone . " \r\n message:" .$message);
+
+        $mail = new SendGrid\Mail($from, $subject, $to, $content);
+        
+        $apiKey = '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';
+        $sg = new \SendGrid($apiKey);
+
+       $response = $sg->client->mail()->send()->post($mail);
+          if($response->statusCode() == "202") 
+		        echo "<script type='text/javascript'>alert('ההודעה נשלחה בהצלחה!')</script>";
+	      else
+		        echo "<script type='text/javascript'>alert('ההודעה לא נשלחה, נא וודא את הנתונים שהזנת!')</script>";
+
+      }
+    }
+
+?> -->
+<head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108205774-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-108205774-1');
+</script>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>משכנתא בהתאמה אישית</title>
+<!--
+<link rel="icon" href="favicon.png" type="image/png"> 
+<link rel="shortcut icon" href="favicon.ico" type="img/x-icon">
+  -->  
+<link rel="shortcut icon" href="img/NewLogo.png"/>
+<link href="css/css.css" rel="stylesheet" type="text/css">
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,800italic,700italic,600italic,400italic,300italic,800,700,600' rel='stylesheet' type='text/css'>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link href="css/responsive.css" rel="stylesheet" type="text/css">
+<link href="css/animate.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" media="screen and (min-device-width: 800px)" href="css/btn.css" />
+<link rel='stylesheet' media='screen and (min-width: 0px) and (max-width: 799px)' href='css/btn-mobile.css' />
+<script type="text/javascript" src="js/jquery.1.8.3.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.js"></script>
+<script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
+<script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="js/jquery.isotope.js"></script>
+<script type="text/javascript" src="js/wow.js"></script>
+<script type="text/javascript" src="js/classie.js"></script>
+<script src="contactform/contactform.js"></script>
+<style>
+html, body. div{
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+}
+@media (max-width: 800px) {
+    #firstlogo {
+        max-width:250%;
+		height:200px;
+		width:340;
+		margin-right:-40px;
+        margin-right: -80;
+    }
+}
+@media screen and (max-width: 600px) {
+  #vid {
+    visibility: hidden;    
+    display: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<header class="header" id="header" ><!--header-start-->  
+    <a href="indexenglish.php" style="float:left;"><img src="img/englishicon.png" style="width:40px;height:30px;padding-left:5px;"></a>             
+	<div class="container">
+    	<div class="logo animated fadeInDown delay-07s">
+        	<a href="#"><img src="img\NewLogoText.png"  id="firstlogo"></a>	
+        </div>
+        <!--<br/><br/>-->
+        <a id="startbutton" class="link animated fadeInUp delay-1s servicelink" href="#service"><strong>או שתחסכו או שתרוויחו !</strong></a>        
+    </div>
+    <div class="we-create animated fadeInUp delay-1s">
+        <img src="img/unionnoback.png" style="float: right;padding-right: 10px;margin-top: -30px"/> 
+    </div>  
+</header><!--header-end-->
+
+
+<nav class="main-nav-outer" id="test"><!--main-nav-start-->
+	<div class="container" style="width:100%;max-width:100%;font-weight: bold">
+        <ul class="main-nav">
+            <li><a href="#team">התמהיל שלנו</a></li>
+            <li><a href="#think">חומר למחשבה</a></li>
+            <li><a href="#Portfolio">הידעתם?</a></li>
+            <li class="small-logo"><a href="#header"><img src="img/NewLogoText.png" id="menulogo"></a></li>
+            <li><a href="#calc">כלים ומחשבונים</a></li>
+            <li><a href="#nicetomeet">נעים להכיר</a></li>
+            <li><a href="#contact">צור קשר</a></li>
+        </ul>
+        <a class="res-nav_click" href="#"><i class="fa-bars"></i></a>
+    </div>
+</nav><!--main-nav-end-->
+
+<section class="main-section" id="service" style='height:100%;display: flex;align-items: center;'><!--main-section-start-->
+	<div class="container" style="padding-top: 0px;">   
+				<div class="service-list" style="text-align: center;width: 100%;font-family: 'Montserrat', sans-serif;color:#222222;font-size: 16px;font-weight: bold;margin-left: auto;margin-right: auto">
+					<h3 id="serviceheadline" style="padding-bottom: 5px">ברוכים הבאים לאתר משכנתא בהתאמה אישית !</h3>
+                    <h3 id="serviceheadline">הרשו לי לברך אתכם על החלטתכם לרכוש נכס ועל היוזמה למנף את עצמכם.</h3><br />
+                    <h3 id="serviceheadline">הרצונות, האינטרסים והצרכים שלכם הופכים להיות המטרה שלי.</h3>
+                    <h3 id="serviceheadline" style="padding-bottom: 5px">חשוב לי שתרגישו בטוחים ונינוחים בעסקה הכי חשובה לכם.</h3>
+				</div>
+            	<div class="service-list">
+                    <div class="service-list-col1">
+                    	<i class="fa fa-credit-card"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">חיסכון כספי</h3>
+                        <p>אנהל את כל התהליך מול הבנקים באמינות, שקיפות, ליווי והדרכה, ואשיג את התנאים הטובים ביותר ליצירת משכנתא<strong> בהתאמה אישית </strong>לפרופיל הפיננסי שלכם, כשהדגש הוא שתחזירו מינימום כסף לבנק.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-user"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">ליווי אישי</h3>
+                        <p>אלווה אתכם יד ביד ואגבש את הדרך הכי טובה עבורכם ללקיחת משכנתא<strong> בהתאמה אישית</strong> בליווי מקיף ופתרונות מיטיבים באופן מקצועי והקפדה על דיסקרטיות עד לחתימות בבנק.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-magic" ></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">פתרונות יצירתיים</h3>
+                        <p>אדאג לפיתרונות הכי נכונים עבורכם עם דגש על שירות אדיב, מקצועי ויחס אישי. אהפוך את התהליך ליעיל, פשוט ואעניק לכם נחת, שקט נפשי וחסכון כספי רב. </p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-graduation-cap"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">ייעוץ מקצועי</h3>
+                        <p>כדוברת "השפה הבנקאית" וכיועצת משכנתאות מקצועית יש לי חשיבות מהותית בעסקה החשובה ביותר שלכם הן בהרכבת תמהיל אופטימאלי והתאמתו לצרכים האישיים עבורכם והן בניהול משא ומתן מול הבנקים.</p>
+                    </div>
+                </div>
+        </div>
+</section><!--main-section-end-->
+
+<section class="main-section team client-part" id="team"  style="color: #ffffff;min-height: 100% "><!--alabaster main-section team-start-->
+	<div class="container" style="padding-top: 40px;">
+        <h3 style="text-align:center;font-family: 'Montserrat', sans-serif;color:#ffffff;font-size: 19px;font-weight: bold;">אני מזמינה אתכם להיכנס לעסקה הפיננסית הגדולה של חייכם בראש שקט.</h3>
+        <h3 style="text-align:center;font-family: 'Montserrat', sans-serif;color:#ffffff;font-size: 19px;font-weight: bold;"> במשכנתא בהתאמה אישית הצורך האישי שלכם הופך להיות המטרה שלי !</h3>
+        <br /><br /><br />
+        <div class="team-leader-block clearfix" style="padding-bottom:40px;">
+            <div class="team-leader-box">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#contact"></a></div>
+                    <img src="img/RequestForAnyPurpose.png">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold">ליווי פיננסי והלוואה לכל מטרה</h3>
+                <span>בהתאם לצרכים ולרצונות שלכם</span>            
+                <p>הלוואה לכל מטרה ניתנת למטרות שונות ומגוונות וחייבת להיות מוגדרת מטרה כגון: שיפוצים, הרחבה, כיסוי הלוואות, עזרה לילדים, רכישת נכס וכו'. <br>ההלוואה ניתנת עד 50% משווי הנכס ונבחנת בבנק כמו לקיחת משכנתא חדשה.<br> השינויים בשוק יכולים להשפיע על ההחזר החודשי ויתרת החוב, ועל כן יש להתחשב במהות העסקה, במטרתה ובאופייה. ניהול התקציב צריך להיות חכם וללא פגיעה ברמת החיים.</p>                
+                <br />
+                <p><strong>אגבש את הדרך הטובה ביותר לצרכים ולרצונות שלכם בליווי פיננסי מקיף ופתרונות מיטיבים.
+</strong></p>
+            </div>
+            <div class="team-leader-box">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/RecyclingMortgage.jpg">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold">מחזור משכנתא</h3>
+                <span>יד ביד לשיפור התנאים</span>
+                <p>תהליך המיחזור דורש הבנה ומקצועיות, ונדרש להתאימו בהתאם לפרופיל הפיננסי וליכולת ההחזר של כל משק בית <strong>בהתאמה אישית</strong>. לאורך החיים מתרחשים שינויים רבים המשפיעים על ההוצאות וההכנסות כגון: קרן השתלמות שנפרעת, תינוק שנולד, ירושות, מזונות, העלאת שכר וכו'. בנוסף, תנאי השוק משתנים ויכולים להשפיע על מסלולי המשכנתא. הליך המיחזור יכול לחסוך עשרות אלפים ועד מאות אלפי ש"ח ולשפר את רמת חייכם בהווה ובעתיד.   </p>
+                <br /> 
+                <p><strong>מוזמנים לתאם פגישת ייעוץ ללא תשלום וללא התחייבות.
+</strong></p>
+            </div>
+            <div class="team-leader-box">
+                <div class="team-leader"> 
+                    <div class="team-leader-shadow"><a href="#"></a></div>
+                    <img src="img/NewMortgage.jpg">
+                    <ul>
+                        <li><a href="#contact" class="fa-phone" style="font-size: 60px"></a></li>
+                    </ul>
+                </div>
+                <h3 style="color:#ffffff;font-family: 'Montserrat', sans-serif;font-size: 16px;font-weight: bold">משכנתא חדשה</h3>
+                <span>בהתאמה אישית</span>
+                <p>לקיחת משכנתא הינה עסקה גדולה ומהותית והרכבת המסלולים על ידי ייעוץ וליווי מקצועי בצורה הטובה והמדויקת ביותר, יכולה להביא לחיסכון מהותי בעסקה. המשכנתא צריכה להתאים לסוג העסקה כגון: רכישה מקבלן/ רכישה מיד שנייה/ בנייה עצמית/ קבוצת רכישה, תמ"א 38 וכו'.  למשכנתא יש השפעה ארוכת טווח על אורך חייכם, ועל כן חשוב שההתנהלות השוטפת של הבית תמשיך להתקיים בצורה תקינה כאשר הדגש הוא <strong> להחזיר מינימום כסף לבנק! </strong></p>
+                <br />
+                <p><strong>אני אדאג לכם לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית.</strong></p>
+            </div>
+        </div>
+    </div>
+</section><!--main-section team-end-->
+
+<section class="main-section" id="think" style="min-height: 100%;display: flex;align-items: center;"><!--main-section-start-->
+	<div class="container"  style="padding-top: 40px;">   
+            
+				<div class="service-list" style="text-align: center;width: 100%;font-family: 'Montserrat', sans-serif;color:#222222;font-size: 16px;font-weight: bold;margin-left: auto;margin-right: auto">
+                    <h3><p><strong>מתי לאחרונה בדקתם את המשכנתא שלכם?</strong></p><br />
+                        <p>מהרגע שלקחתם משכנתא ועד היום ההכנסה שלכם גדלה? / הצרכים שלכם השתנו?</p>
+                        <p>אולי דווקא עכשיו אתם נדרשים לצמצם בעלויות?</p>
+                        <p>אולי ניתן להשתמש בנכס שלכם כהשקעה לדבר הבא?</p>
+                        <p>אל תשאירו את כל השאלות פתוחות !</p><br />
+                        <strong>מוזמנים לפנות אלי לתיאום פגישה ללא עלות שאבין את הצורך האישי שלכם וארכיב לכם משכנתא בהתאמה אישית במיוחד עבורכם!</strong></h3>
+                </div>
+            	<div class="service-list">
+                    <div class="service-list-col1">
+                    	<i class="fa fa-user fa-gift"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">ממני אליכם!</h3>
+                        <p>בדיקת מחזור משכנתא ללא עלות וללא התחייבות.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-exchange"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">התאמה לתזרים משק הבית</h3>
+                        <p>ליווי פיננסי ובדיקת הלוואות שמהוות נטל על תזרים המזומנים החודשי. לרבים מנוטלי המשכנתא קיימות הלוואות נוספות המתווספות להחזרים החודשיים ומקשה על כלכלת הבית. אני אדאג לכם לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-bar-chart"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">התאמת מסלולים לתועלת מירבית</h3>
+                        <p>הרכבת תמהיל משכנתא אופטימאלי והתאמה לשינויים מהותיים בחייכם, במשפחתכם ובמשק במקביל. אדאג לתנאים אידיאלים עבורכם המתאימים אישית לצרכים ולרצונות שלכם.</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-compass"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">ליווי מקיף ופתרונות מיטיבים</h3>
+                        <p>לקוחות רבים פוגשים אותי לאחר שכבר עשו את כל הטעויות האפשריות. הם מגיעים אלי ומבקשים שאעזור להם כי הם סורבו בבנק או כי נמצאים בפיגור בתשלומים לקבלן. למעשה, הצעד שעשינו כדי להתקדם בחיים והעסקה שאמורה לשמח אותנו הופכים לסיוט שלא לצורך. אל תהססו - תתקשרו !</p>
+                    </div>
+                </div>
+                <div class="service-list">
+                	<div class="service-list-col1">
+                    	<i class="fa fa-trophy"></i>
+                    </div>
+                	<div class="service-list-col2">
+                        <h3 class="graphtitle">מנפו את עצמכם!</h3>
+                        <p>יש לכם נכס? החוב של המשכנתא נמוך? הערך של הנכס עלה? אם כן, השמיים הם הגבול! השתמשו בנכס כדי למנף את עצמכם ולשדרג את רמת חייכם. אלווה אתכם כל הדרך עד לחתימות בבנק ואדאג שהתהליך יהיה פשוט, יעיל וחסכוני.</p>
+                    </div>
+                </div>
+                
+        </div>
+</section><!--main-section-end-->
+
+
+
+<section class="main-section paddind client-part" id="Portfolio" style="width:100%;background-color: #7c64a0;color: #ffffff"><!--alabaster main-section-start-->
+	<div class="container"  style="padding-top: 40px;">
+    	<h6 style="font-family: 'Montserrat', sans-serif;font-size: 19px;font-weight: bold;color: #ffffff">כל מה שרציתם לדעת ולא העזתם לשאול...</h6>
+        <div class="portfolioFilter" style="width:100%;">  
+        <ul class="Portfolio-nav wow fadeIn delay-02s" style="font-size:large; width:100%;">
+        	<li><a class="btn current" href="#" data-filter="*">כל המאמרים</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".about">אודות המשכנתא</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".repayments">פירעונות, מיחזורים וגרירה</a></li>
+            <br />
+            <li><a class="btn btn-block" href="#" data-filter=".taxes">מסים, מדדים וביטוחים</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".benefits">הטבות ויתרונות לכל גיל</a></li>
+            <li><a class="btn btn-block" href="#" data-filter=".types">סוגי בנייה</a></li>
+        </ul>
+       </div> 
+        
+	</div>
+    <div class="portfolioContainer wow fadeInUp delay-04s">
+            	<div class="Portfolio-box about"> 
+                	<a data-toggle="modal" data-target="#myModal1"><img src="img/MortgageStory.jpg" id="left"></a>
+                	<h3 id="articletext">אה
+                    .. זה כל הסיפור !</h3>
+                </div>
+                <div class="Portfolio-box about">
+                	<a data-toggle="modal" data-target="#myModal2"><img src="img/BankChecks.jpg"></a>	
+                	<h3 id="articletext">מס' דברים חשובים שהבנקים בודקים...</h3>
+                </div>
+                <div class="Portfolio-box about"> 
+                	<a data-toggle="modal" data-target="#myModal0"><img src="img/PrivateMortgageAdvisor.png" id="left"></a>
+                	<h3 id="articletext">למה כדאי לקחת יועץ משכנתאות פרטי ?</h3>
+                </div>
+                <div class="Portfolio-box repayments">
+                	<a data-toggle="modal" data-target="#myModal3"><img src="img/RefinanceTheMortgage.jpg" id="right"></a>	
+                	<h3 id="articletext">האם כדאי למחזר את המשכנתא?</h3>
+                </div>
+                <div class="Portfolio-box repayments" >
+                	<a data-toggle="modal" data-target="#myModal4"><img src="img/EarlyRepaymentFee.png" id="left"></a>	
+                	<h3 id="articletext">עמלת פירעון מוקדם- מתי אנו משלמים?</h3>
+                </div>
+                <div class="Portfolio-box repayments">
+                	<a data-toggle="modal" data-target="#myModal5"><img src="img/DraggingAMortgage.jpg"></a>	
+                	<h3 id="articletext">גרירת משכנתא- מה התהליך? והאם זה משתלם?</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal6"><img src="img/Insurance.jpg" id="right"></a>	
+                	<h3 id="articletext">אילו ביטוחים הבנק דורש ומה חשוב לדעת?</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal7"><img src="img/ConstructionInputsIndex.jpg" id="left"></a>	
+                	<h3 id="articletext">מדד תשומות הבנייה- יש מדד כזה?</h3>
+                </div>
+                <div class="Portfolio-box taxes">
+                	<a data-toggle="modal" data-target="#myModal8"><img src="img/TaxPurchase.jpg"></a>	
+                	<h3 id="articletext">מס.. רכישה.. וכל מה שביניהם</h3>
+                </div>
+                <div class="Portfolio-box benefits">
+                	<a data-toggle="modal" data-target="#myModal9"><img src="img/ReverseMortgage.jpg" id="right"></a>	
+                	<h3 id="articletext">משכנתא הפוכה</h3>
+                </div>
+                <div class="Portfolio-box benefits">
+                	<a data-toggle="modal" data-target="#myModal10"><img src="img/PriceperOccupant.jpg" id="left"></a>	
+                	<h3 id="articletext">מחיר למשתכן</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal11"><img src="img/SelfConstruction.jpg"></a>	
+                	<h3 id="articletext">הכינו עצמכם לבניה עצמית</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal12"><img src="img/Tama38.jpg" id="right"></a>	
+                	<h3 id="articletext">פרויקט תמא 38</h3>
+                </div>
+                <div class="Portfolio-box types">
+                	<a data-toggle="modal" data-target="#myModal13"><img src="img/PurchaseGroups.jpg"></a>	
+                	<h3 id="articletext">קבוצות רכישה</h3>
+                </div>
+                <div class="Portfolio-box about">
+                	<a data-toggle="modal" data-target="#myModal14"><img src="img/Dollars.jpg"></a>	
+                	<h3 id="articletext">החוק להגבלת השימוש במזומן בעסקאות מקרקעין</h3>
+                </div>
+    </div>
+                 <!-- Modal-0 -->
+                <div class="modal fade" id="myModal0" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">למה כדאי לקחת יועץ משכנתאות פרטי?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>יועץ משכנתאות פרטי מלווה ומייצג את הלקוחות שהם בעלי הנכס תוך שמירה על מירב האינטרסים והזכויות שלהם. לרוב האנשים אין ידע מספק על המשכנתא, ולכן הם עלולים למצוא את עצמם מתחייבים לעסקה שתפגע להם באיכות החיים ואף לשלם מעבר למה שהמציאות מחייבת. </p>
+                                <br />
+                                <p>הבנק הוא גוף פיננסי שמוכר כסף ומעוניין למקסם את רווחיו, אך יחד עם זאת הוא גם גוף שמנהל סיכונים. משכנתא היא מוצר מתוך מגוון מוצרים שהבנק מוכר, וכמו כל גוף שמוכר מוצר, בהחלט סביר שהבנק יבקש להרוויח ולמקסם את הכנסתו במסגרת יכולות הלווים לעמוד בהתחייבויותיהם. מצד אחד, מעוניין למקסם את רווחיו בהתאמת מסלולי המשכנתא בתמהיל בדיוק לפי מה שזול ומתאים לו באותה תקופה. מצד שני, מעוניין שהלווים לא יסתבכו ויוכלו לשרוד את ההחזרים החודשיים ולהימנע מאי עמידה בהתחייבויות בעתיד. </p>
+                                <br />
+                                <p>בעקבות האינטרסים השונים יש לפעול בזהירות המתבקשת ולקחת יועץ משכנתאות שמכיר את השפה המקצועית שהבנק משתמש בה ואת המשמעות של כל פרט בתהליך כדי לקדם את מטרות הלקוח בצורה הטובה ביותר. המשכנתא זו עסקה מאד משמעותית שתשפיע על איכות החיים שלנו לתקופה ארוכה ועל כן חשוב להכיר את השוק ולהתייעץ עם גורמים אמינים ומקצועיים לפני סגירת העסקה.  </p>
+                                <br />
+                                <p>ליועץ משכנתאות יש את הידע והכלים להתמודד עם הבנק ולנהל משא ומתן ממצה עד להשגת תנאי המשכנתא הטובים והחסכוניים ביותר עבור הלקוח שיתאימו ליכולות, לצרכים ולרצונות של הלקוח ולחסוך עשרות עד מאות אלפי שקלים בעסקה. </p>
+                                <br />
+                                <p><strong>במשכנתא בהתאמה אישית</strong> אדאג לאינטרסים שלכם, אהפוך את התהליך ליעיל, פשוט ואעניק לכם נחת ושקט נפשי בד בבד עם מקצועיות, שקיפות וזמינות בליווי אישי צעד צעד עד לחתימות בבנק, בליווי מקיף ופתרונות מיטיבים, באופן מקצועי והקפדה על דיסקרטיות, כשהדגש הוא שתחזירו כמה שפחות כסף לבנק, תחסכו זמן ובירוקרטיה מיותרת !</p>
+                                <br />
+                                <p>אני, שירן בר-עוז, יועצת משכנתאות הרשומה כחברה בהתאחדות יועצי המשכנתאות בישראל. מעבר להיותי יועצת משכנתאות, יש לי את הידע והניסיון שרכשתי במגוון עיסוקים בחיי, המשמשים כלי משמעותי להעניק לכם את השירות הטוב ביותר, ליצירת <strong>בהתאמה אישית</strong> לפרופיל הפיננסי<strong> שלכם</strong>. רכשתי מעל ל 20 שנות ניסיון מקצועי וניהולי בתחום הבנקאות, המשכנתאות והנדל"ן. אני בעלת MBA במנהל עסקים בהתמחות מימון ומשאבי אנוש, בוגרת מכללת "פסגות" ו"פוקוס" האקדמיה למשכנתאות ובנוסף יש לי רישיון תיווך עוד מתקופת התעסקותי בעולם הנדל"ן.</p>
+                                <br />
+                                <p><strong>יד ביד נצעד אל המשכנתא הטובה ביותר עבורכם בהתאמה אישית.</strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו!</strong></p>
+                                <br />
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-1 -->
+                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">משכנתא.. זה כל הסיפור !</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>מעוניינים לקנות בית? הולכים לבצע את אחת העסקאות הכי חשובות בחייכם? </p>
+                                <br />
+                                <p> ישנם כמה דברים שאתם צריכים לדעת על לקיחת משכנתא. </p>
+                                <br />
+                                <p>משכנתא זו ההלוואה הכי ארוכה, הכי גדולה והכי מורכבת שתיקחו, אך יחד עם זאת, היא נחשבת לאחד הכלים המימונים הכי טובים שקיימים, וחשוב לבצע אותה נכון בליווי וייעוץ מקצועי אובייקטיבי. </p>
+                                <br /> 
+                                <p>כל אחד (כמעט) צריך משכנתא. לכל אחד יש את הצרכים שלו, הרצונות שלו והיכולות הפיננסיות שלו. </p>
+                                <br />
+                                <p>חשוב לשאול:  האם אתם הולכים לגור בדירה? או שהיא נועדה להשקעה? </p>
+                                <br />
+                                <p>למה אני שואלת ? כי זה מאד משנה..! בחירת התמהיל מושפע באופן ישיר מהצרכים שלכם והוא צריך להתאים לפרופיל הפיננסי שלכם<strong> בהתאמה אישית!</strong>. </p>
+                                <br />
+                                <p>בחירת תמהיל המשכנתא מורכב ממספר פרמטרים עוד לפני שבכלל התעסקנו בריביות.</p>
+                                <br />
+                                <p>לא אמרתי שריביות זה לא חשוב- <strong>זה מאד חשוב </strong>אבל רק לאחר הרכבת המסלולים הנכונים ביותר עבור כל אחד במיוחד<strong> בהתאמה אישית ! </strong> ישנם מגוון מסלולים ולכל מסלול יש ריביות שונות, יתרונות וחסרונות. מדובר בתהליך מורכב, בעסקה גדולה ומהותית. </p>
+                                <br />
+                                <p>הרכבת המסלולים על ידי ייעוץ וליווי מקצועי בצורה הטובה והמדויקת ביותר לכל לקוח,יכולה להביא לחיסכון מהותי בריבית של עשרות אלפים עד מאות אלפי שקלים בעסקה. </p>
+                                <br />
+                                <p>מעבר לחיסכון המהותי, דבר נוסף שהוא לא פחות חשוב בהרכבת המשכנתא בצורה הטובה והאיכותית ביותר הוא להבין שלמשכנתא יש השפעה ארוכת טווח על אורך חייכם, ועל כן חשוב שההתנהלות השוטפת של הבית תמשיך להתקיים בצורה תקינה כאשר הדגש הוא <strong>להחזיר מינימום כסף לבנק! </strong></p>
+                                <br />
+                                <p><strong>לשאלתכם.. למה אני? מכיוון שיש לי חשיבות מהותית כיועצת רשומה בהתאחדות יועצי המשכנתאות בעסקה החשובה ביותר שלכם. אלווה אתכם יד ביד עד לחתימות בבנק בשירות אישי, אדיב, מקצועי ואיכותי.</strong> יש לי תואר שני במנהל עסקים בהתמחות מימון ומשאבי אנוש, אני עובדת עם התוכנות והסימולאטורים הכי מתקדמים ועדכניים. מעבר לזה , אתם חייבים להבין שקיים ניגוד אינטרסים בין הלקוח לבנק. הבנק הוא גוף פיננסי שמטרתו למקסם את רווחיו ולעומת זאת הלווה מעוניין לשלם כמה שפחות ולמזער את עלויותיו. אני מבססת את דבריי כמי שהיא בעלת ניסיון מקצועי וניהולי של כ 12 שנות וותק בנקאי.</p>
+                                <br />
+                                <p><strong>אלווה אתכם יד ביד ואגבש את הדרך הכי טובה עבורכם ללקיחת משכנתא בהתאמה אישית בליווי מקיף ופתרונות מיטיבים באופן מקצועי והקפדה על דיסקרטיות.</strong></p>
+                                <br /><br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-2 -->
+                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">ם..מס' דברים חשובים שהבנקים בודקים...</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>קיימת רגולציה על הבנקים שכפופים להנחיית בנק ישראל. בנק ישראל הוא הגורם שמעדכן בין היתר הנחיות בנוגע למשכנתאות. כגון: הון עצמי, יחס החזר, זכאויות וכו'. בשל כך חשוב להבין שכשאנו מעוניינים לקחת משכנתא יש להיערך למס' פרמטרים עיקריים שהבנק בוחן:</p>
+                                <br />
+                                <p>
+אנו נדרשים<strong> להון עצמי </strong>של 25% לפחות. כלומר אם שווי הנכס מיליון שח צריך שיהיה לנו סכום של לפחות 250 אלף שח.<strong> חשוב לדעת-</strong> ככל שאחוז המימון הבנקאי גבוה יותר כך הריביות גבוהות בהתאמה, אך אם אחוז המימון שנבקש מהבנק יהיה נמוך יותר כך הריביות יהיו נמוכות יותר. צריך לשים לב שאם אחוז המימון שיש לרשות הלווים נמוך, כדאי טרם החתימה על חוזה הרכישה לבקש אישור עקרוני מהבנק. </p>
+                                <br />
+                                <p><strong>ברכישת דירה חדשה מקבלן</strong> יש לבדוק האם קיים בנק מלווה לפרויקט. הבנק יעביר כספים לקבלן רק לאחר ששילמתם את ההון העצמי. רק לאחר תשלום ההון העצמי הבנק ישלם לקבלן את התשלומים בהתאם לחוזה הרכישה.<strong> חשוב לדעת- </strong> הסכומים למימון יקבעו על פי קביעת השמאי של הבנק בלבד. כלומר, אחוז המימון יהיה בהתאמה לשווי <strong>שקבע השמאי ולא לסכום שמופיע בחוזה הרכישה.  </strong></p>
+                                <br />
+                                <p>ההחזר החודשי של המשכנתא לא יעלה על 35% מההכנסה הפנויה נטו. (הכנסה נטו מכיוון שהבנקים מקזזים מיתרת ההכנסות הוצאות כגון: הלוואות/ מזונות וכו'). יחס ההחזר מסתכם בכ 30 % עד 40% לכל היותר (זהו נתון שמשתנה בין בנק לבנק). <strong>חשוב לדעת- </strong>החזר חודשי נמוך לא בהכרח מעיד על משכנתא שבנויה בצורה מקצועית ונכונה ללווה. ברב המקרים החזר נמוך מאד מעיד על כך שההחזר צפוי לעלות בעתיד באופן ניכר ואף ישפיע על יכולת ההחזר של הלקוח בעתיד, ולעיתים אף להביא אותו לסיכון מהותי של אי עמידה בתשלומים. כמו כן חשוב להבין כי ככל שהתקופה קצרה יותר כך גם הריביות יהיו נמוכות יותר. <strong>מה שהכי חשוב זה שתמהיל המשכנתא יורכב במקצועיות ובהתאמה אישית לפי הצרכים של הלקוח.</strong></p>
+                                <br />
+                                <p>חשוב לוודא <strong>שההתנהלות הפיננסית </strong>תקינה וההיסטוריה האשראית של הלווים ללא סימונים והתראות.</p>
+                                <br />
+                                <p>הבנק בודק<strong> רצף תעסוקתי</strong> של הלווים. בוחן יכולת החזר של הלווה על מנת לוודא שיוכל לעמוד בתשלומים לאורך זמן, מכיוון שהמשכנתא היא הלוואה ארוכת טווח.</p>
+                                <br />
+                                <p>על כן הבנק מבקש את כל המסמכים הרלוונטיים טרם הגשת התיק וקבלת האישור העקרוני. קיים הבדל בהגשת תיק של שכיר לבין תיק של עצמאי. לרב הבנק מבקש לפגישה הראשונית ת.ז.,  תנועות עו"ש 3 חודשים, פירוט הלוואות ו 3 תלושי שכר ו/ או שומת מס לעצמאים. </p>
+                                <br />
+                                <p><strong>חשוב לדעת- </strong>לא הולכים לבנק ללא יועץ פרטי רשום כמו שלא מבצעים עסקת נדל"ן ללא עו"ד. תהליך לקיחת המשכנתא מורכב הן מבחינת פרוצדוראלית והן מבחינת בחירת התמהיל הנכון. נקודת ההנחה היא שקיים ניגוד אינטרסים בין הבנק ללווה. לבנק יש אינטרס להרוויח כמה שיותר כסף ולכם חשוב לשלם כמה שפחות כסף ובמסלולים הכי נכונים עבורכם<strong> בהתאמה אישית ! </strong></p>
+                                <br />
+                                <p><strong>אני אדאג לכם לקבלת המשכנתא הטובה ביותר עבורכם !</strong></p>
+                                <br />
+                                <p><strong>אל תשלמו יותר ממה שהמציאות מחייבת !</strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-3 -->
+                <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">האם כדאי למחזר את המשכנתא?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>תהליך המחזור הינו <strong>לקיחת משכנתא חדשה בתנאים טובים יותר מהמשכנתא הקיימת שלכם.</strong> לרב מסלקים את המשכנתא הקיימת כאשר הריביות במשק<strong> נמוכות יותר </strong>מאשר במועד לקיחת ההלוואה. הליך המחזור יכול לחסוך עשרות אלפים ועד מאות אלפי ש"ח. יש לבחון את תמהיל המשכנתא ולוודא שמותאם <strong>בהתאמה אישית</strong> לפרופיל הפיננסי של הלקוח. ניתן לבחון קיצור תקופה, עליית החזר חודשי או הקטנת החזר חודשי בהתאם לרמת ההכנסה של הלקוח ולצרכים האישיים של כל אחד בהתאמה. </p>
+                                <br />
+                                <p>בתהליך המחזור ניתן לבחון עליית ערך הנכס ותוספת סכום למשכנתא בהתאם לצרכי הלקוח. ישנה קשת רחבה של פעולות שניתן לבצע במחזור המשכנתא, לדאוג לאינטרס האישי של הלקוח ולשפר את רמת חייו וכלכלת ביתו. פרט חשוב שיש להתייחס אליו הוא עמלת הפירעון המוקדם ולבחון בהתאם את כדאיות המחזור במגוון המסלולים.<strong> בדר"כ ככל שעמלת הפירעון גבוהה יותר כך החיסכון גבוה יותר מכיוון שבמצב זה יש הפרש בריביות לטובת הלקוח </strong>(בין המשכנתא שנלקחה לבין הריביות שקיימות בעת המחזור).</p>
+                                <br />
+                                <p>תהליך המחזור דורש הבנה ומקצועיות. אלווה אתכם יד ביד ואגבש את הדרך הכי טובה עבורכם ללקיחת משכנתא <strong>בהתאמה אישית</strong> בליווי מקיף ופתרונות מיטיבים באופן מקצועי והקפדה על דיסקרטיות. </p>
+                                <br />
+                                <p>אל תתלבטו- כשיש ספק אין ספק! השאירו פרטים ואחזור אליכם בהקדם. </p>
+                                <br />
+                                <p style=" text-align: center;"><strong>* בדיקת מחזור משכנתא ללא תשלום והתחייבות *</strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br /> 
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-4 -->
+                <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">עמלת פירעון מוקדם- מתי אנו משלמים ? </h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>אתם מעוניינים לפרוע את המשכנתא אך לא יודעים מה העמלה שתצטרכו לשלם על הפירעון המוקדם? הרשו לי לעשות לכם סדר ולהבין איך אפשר לנסות להימנע מעלויות מיותרות.</p>
+                                <br />
+                                <p>המשכנתא בדר"כ מורכבת ממספר מסלולים שונים ולכל מסלול יש עמלת פירעון שמחושבת באופן שונה. </p>
+                                <br />
+                                <p>1. <strong>עמלה תפעולית: </strong>עמלת שהבנק גובה על תפעול החזר ומסתכמת בעשרות שקלים (כ 60 שח). </p>
+                                <br />
+                                <p>2. <strong>עמלת אי הודעה: </strong>הבנק מבקש מהלווה הודעה של 10 ימים לפחות טרם פירעון המשכנתא. במידה והלווה יעדכן 10 ימים מראש לא ישלם עמלה, אך אם לא יודיע יחויב ב 0.1% מסכום המשכנתא שנפרעת. </p>
+                                <br /> 
+                                <p>3.<strong> עמלת היוון:  </strong>(העמלה המשמעותית ביותר)</p>
+                                <p>כאשר לקחנו הלוואה מהבנק, הבנק התחייב על ריבית מסוימת <strong>בריבית קבועה </strong>(לא משנה אם זה ריבית קבועה צמודה / קבועה לא צמודה/ ריבית משתנה צמודה או לא צמודה כל 5 שנים או יותר) , אם נבקש כעת לפרוע את ההלוואה הבנק יצטרך למצוא לווה חדש לכסף, אולם אם <strong>הריבית </strong>בעת הפירעון המוקדם<strong> נמוכה</strong> יותר, המשמעות היא שהבנק<strong> ירוויח פחות</strong> ולכן הוא דורש <strong>לפצות את עצמו </strong>על ההפרש. (למה הפיצוי? מכיוון שבמסלולים אלו התחייבנו כלפי הבנק לשלם ריבית מסוימת לאורך כל תקופת המשכנתא ובעת הפירעון המוקדם אנו מפסיקים את ההתחייבות באמצע).  </p>
+                                <br />
+                                <p><strong>אם כך, איך מחשבים את העמלה ? </strong>כשלקוח מבקש לפרוע בפירעון מוקדם, הבנק בודק את הריבית הממוצעת הקיימת באותה עת בשוק באותו מסלול הלוואה (למשך התקופה שנשארה). במקביל, הוא בודק את הריבית הממוצעת באותו המסלול בעת נטילת ההלוואה, או את הריבית שנקבעה ללקוח - הנמוכה מבין השתיים. <strong>לאחר הבדיקה הבנק בוחן את ההפרש ביניהן: </strong></p>
+                                <br />
+                                <p>אם<strong> הריבית הנוכחית בהלוואה נמוכה </strong>או זהה לריבית בעת לקיחת ההלוואה אז <strong>הלקוח יחויב </strong>בעמלת היוון. אם<strong> הריבית גבוהה</strong> יותר<strong> הלקוח לא יחויב</strong> בהפרש. </p>
+                                <br />
+                                <p>לדוגמא: אם לקחתם משכנתא ל20 שנה בריבית של 6% , שזו היתה גם הריבית הממוצעת בשוק באותה תקופה. אחרי 5 שנים ביקשתם למחזר את המשכנתא ולבצע פירעון מוקדם. הבנק יבדוק את הריבית הממוצעת בהלוואה דומה ל 15 שנה, לסכום שנותר. אם הריבית הממוצעת עומדת לדוגמא על 7% , הבנק לא יחייב אתכם בעמלה, שכן הריבית גבוהה יותר והבנק יוכל להלוות את הכסף שלכם למישהו אחר מבלי "להפסיד". מנגד, אם הריבית עומדת על 4% הבנק יחייב אתכם בעמלת היוון של 2%.</p>
+                                <br />
+                                <p>דוגמא נוספת: בנקודות יציאה שהוגדרו במסלולים כבר מראש (לדוגמא: משתנה כל 5 שנים) לא נשלם עמלת היוון בנקודת היציאה (לאחר ה 5 שנים), אך אם נחליט לפרוע את המשכנתא לפני נקודת היציאה נשלם עמלת היוון על השנים שנותרו עד תום המסלול. (לדוגמא אם החלטנו לאחר 3 שנים לפרוע את המסלול משתנה כל 5 שנים נשלם רק עבור השנתיים שנותרו עד לנקודת היציאה). כמובן שכל זאת בהנחה שהריבית נמוכה יותר ממה שלקחנו את המשכנתא - כפי שפירטתי בחישוב של עמלת ההיוון המופיעה למעלה.</p>
+                                <br />
+                                <p><strong>דגשים חשובים: </strong></p>
+                                <p>במסלולים על בסיס משתנה<strong> לתקופה קצרה </strong>(כגון: פריים, משתנה כל שנה, מט"ח)<strong> אין עמלת היוון </strong>מכיוון שהתחייבנו שהריבית שנשלם תשתנה בהתאם לשינויי<strong> הריבית במשק. </strong></p>
+                                <br />
+                                <p>בהלוואות זכאות אין עמלות היוון מכיוון שזו הטבה מהמדינה. </p>
+                                <br />
+                                <p><strong>4. עמלת מדד ממוצע (הלוואות צמודות מדד בלבד):</strong></p>
+                                <p><strong>בעמלת מדד ממוצע </strong>מדובר על מקרה בו נפרעת הלוואה צמודת מדד בין <strong>ה 1 לחודש ועד ל 15</strong> לחודש. מכיוון שהמדד מתפרסם ב 15 מידי חודש, בהלוואה שנפרעת בימים שלפני כן, הריבית למעשה<strong> אינה ידועה. </strong>בהתאם לכך<strong> הבנק גובה עמלה בשיעור של 50% מהעלייה הממוצעת של 12 החודשים הקודמים</strong> (כלומר, הלווה ישלם את מחצית המדד הממוצע של 12 החודשים האחרונים). במידה והתברר כי המדד לאותו חודש היה שלילי, עמד על אפס, או אפילו חיובי, אך פחות מהממוצע כפי שמחושבת העמלה כאמור, הרי <strong>שהלקוח שילם למעשה סוג של קנס. </strong></p>
+                                <br />
+                                <p>לעומת זאת, אם תפרעו את המשכנתא<strong> בין ה 16 לחודש ועד סופו לא תשלמו עמלה,</strong> אבל צריך לקחת בחשבון שב 15 לאותו חודש<strong> המדד שפורסם יחושב על המשכנתא. </strong></p>
+                                <br />
+                                <p><strong>חשוב לדעת- </strong>אם אתם צופים<strong> שהמדד יהיה גבוה</strong> בחודש שבו אתם מחזירים את המשכנתא אז <strong>החזירו אותה לפני ה 15 לחודש </strong>מכיוון שכך תשלמו רק את המדד הממוצע של השנה שעברה. אך אם אתם חושבים<strong> שהמדד יהיה שלילי או נמוך המתינו לאחר ה 16 לחודש. </strong></p>
+                                <br />
+                                <br />
+                                <p><strong>5. הפרשי שער בהלוואות צמודות מט"ח: (הלוואות שכיחות)</strong></p>
+                                <p>עמלה נוספת נגבית במקרה שבו נלקחה <strong>הלוואה צמודת מט"ח. </strong> העמלה היא בגובה הפרשי השער בין שער מטבע החוץ ביום שבו בוצע הפירעון המוקדם לבין השער שיחול שני ימי עסקים מאוחר יותר. <strong> אם הלווה מסר בכתב הודעה מוקדמת של שני ימי עסקים לפחות </strong>על הכוונה לבצע פירעון מוקדם, <strong>הוא פטור מעמלה זו. </strong></p>
+                                <br />
+                                <p>ההתמחות היא לבנות מסלולים מותאמים ללקוח<strong> בהתאמה אישית </strong>לפי צרכיו, ולבנות תמהיל אופטימלי שיורכב בין היתר ממסלולים בהם אין עמלות פירעון מוקדם. </p>
+                                <br />
+                                <p><strong>אלווה אתכם יד ביד ואגבש את הדרך הכי טובה עבורכם בליווי פיננסי מקיף, פתרונות מיטיבים ובאופן מקצועי שיעניקו לכם שקט נפשי וביטחון בעסקה. </strong></p>
+                                <br />
+                                <p><strong>אדאג לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית !</strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal-5 -->
+                <div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">גרירת משכנתא- מה התהליך? והאם זה משתלם?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>גרירת משכנתא מתבצעת כאשר אנחנו קונים נכס חדש ומוכרים את הנכס הישן, ושהמשכנתא של הנכס הישן בתנאים מצוינים. בפעולת הגרירה אנו מעוניינים שהמשכנתא על הבית הישן תועבר לנכס החדש ותנאי המשכנתא לא ישתנו. לרב נצטרך להוסיף סכום כסף נוסף על קניית הנכס החדש. (במידה ושווי הדירה החדשה נמוך יותר מהנכס הישן נצטרך לקבל אישור לגרירה מהבנק מכיוון שהשווי לבטוחה פחות טוב עבורו).  </p>
+                                <br />
+                                <p><strong>חשוב לדעת- </strong>גרירת משכנתא יכולה להגדיל את ההחזר החודשי על אף התנאים המצוינים. אין בעיה אם יכולת ההחזר שלכם מאפשרת זאת, אך אם לא זה יכול להוות בעיה כי הבנק לא יאשר את פעולת הגרירה ותיאלצו לקחת משכנתא חדשה על מלוא הסכום (הסכום המבוקש לגרירה+החלק הנוסף על קניית הבית החדש). </p>
+                                <br />
+                                <p>דבר נוסף מהותי שיש לקחת בחשבון הוא שהבנק בו אתם מבצעים את הגרירה יכול לנצל את המצב ולא ימהר להטיב איתכם בריביות על הסכום הנוסף שאתם צריכים להוסיף במשכנתא (שאינם כוללים את הכספים של הגרירה), ועל כן אם ההצעה שתקבלו לא אטרקטיבית עבורכם מומלץ לבדוק הצעה חלופית בבנק אחר על כל מלוא הסכום (כספי הגרירה + תוספת על הנכס החדש). </p>
+                                <br />
+                                <p> <strong>תהליך הגרירה</strong> יכול להתבצע<strong> ב 2 אופנים. </strong>  זה תלוי אם כבר רכשתם דירה חדשה או לא. <strong>אם כבר רכשתם דירה </strong> אז הבנק מעביר את המשכנתא לנכס החדש ודואג לעדכן את הבטוחה בהתאם.</p>
+                                <br />
+                                <p><strong> במידה וטרם רכשתם נכס חדש אבל כבר מכרתם את הבית הישן  </strong>אז הבנק גורר את המשכנתא  <strong>לערבות בנקאית </strong> והקונה של הנכס הישן שלכם מפקיד את הכספים לטובת הערבות בבנק שלכם ולא ישירות עבורכם. התשלום עבור המשכנתא ישולם כסדרו . פשוט שכשתקנו את הנכס החדש הבנק יעביר את הכספים מהערבות לטובת המוכר שלכם וימשכן את הנכס. </p>
+                                <br />
+                                <p><strong>אדאג לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית, אלווה אתכם יד ביד עד לחתימות בבנק בשירות אישי ואהפוך את התהליך ליעיל ופשוט.</strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-6 -->
+                <div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel"><strong>אילו ביטוחים הבנק דורש ומה חשוב לדעת?</strong></h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>כשאנו לוקחים משכנתא מהבנק אנו נדרשים לבצע 2 סוגים של ביטוחים: ביטוח חיים וביטוח מבנה . </p>
+                                <br />
+                                <strong>ביטוח המבנה זה למעשה ביטוח הדירה.</strong> כשמבצעים ביטוח באמצעות הבנק יש לשים לב שביטוח המבנה<strong> אינו כולל צד ג' </strong>(ביטוח דירה צד ג' נועד להגן עליכם מפני נזקים שנגרמו במקרים שונים כגון רטיבות בקירות של השכן שמקורם בנזילה מהאמבטיה שלכם או אדם שהחליק במדרגות ביתכם וכו').
+                                <br /><br />
+                                <p><strong>ביטוח החיים</strong> נועד במקרה של אי יכולת החזר כתוצאה ממקרה מוות. החברה שמבטחת תשלם את המשכנתא במקרה של מוות</p>
+                                <br />
+                                <p><strong>חשוב לדעת- </strong>כאשר מבצעים את הביטוח רצוי לקבל הצעה נוספת מסוכן ביטוח חיצוני ולוודא שכולל את מקסימום הכיסויים. </p>
+                                <br />
+                                <p><strong>אני אדאג לקבלת המשכנתא הטובה ביותר עבורכם ואלווה אתכם יד ביד עד לחתימות בבנק בשירות אישי, אדיב ומקצועי. אפנה אתכם לסוכן ביטוח מקצועי שידאג לכם להצעה אטרקטיבית ומשתלמת. </strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-7 -->
+                <div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">מדד תשומות הבנייה- יש מדד כזה?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>הרבה אנשים לא יודעים על קיומו של מדד תשומות הבנייה. לאחר שנבין מה זה מדד תשומות הבנייה ולמי הוא מתייחס, נבחן האם הוא באמת מהווה איום משמעותי על ההפרשים בחתימת החוזה לבין התשלום בפועל לקבלן?</p>
+                                <br />
+                                <p>מדד תשומות הבניה מודד כמה עולה לבנות ולפיו נקבע מחיר הסל. הוא מודד את השינויים החלים בהוצאות הדרושות לקניית חומרים, מוצרים וכו' המשמשים לבניית בתי מגורים, ומייצג את הרכב הוצאות הבנייה של הקבלנים. מדד זה מפורסם ומחושב כל 15 לחודש. מחיר הסל הנוכחי ביחס למחיר הסל הקודם מבטא את העלייה של המדד באחוזים ביחס לחודש הקודם. </p>
+                                <br />
+                                <p>מדד תשומות הבנייה מתייחס בעיקר לרוכשי דירות מקבלן. רוכשים אלו משלמים את עלות הדירה בתשלומים (כפי שמופיע בחוזה הרכישה), והתשלומים האלו צמודים למדד תשומות הבנייה. למדד זה יש השפעה ענקית על רוכשי הדירות החדשות והתשלומים לקבלן עלולים להתייקר ובסכומים משמעותיים שכנראה לא נלקחו בחשבון טרם הרכישה. </p>
+                                <br />
+                                <p>משום כך רוכשי הדירות צריכים לעקוב אחר מדד זה כדי להבין בכמה החוב שלהם גדל, וכדי לחשב האם כדאי להם לשלם לקבלן מוקדם או לדחות את התשלום ככל האפשר. אם להקדים את המשכנתא או לחסוך בינתיים כל חודש ולהעביר הון עצמי גבוה יותר לקבלן? 		          נשאלת השאלה מי יותר גבוה? מדד תשומות הבניה או הריבית על המשכנתא? מטרת קניית הנכס משמעותית אף היא לבחינת כדאיות הקדמת או דחיית תשלומי מדד תשומת הבנייה לקבלן.</p>
+                                <br />
+                                <p><strong>חשוב לדעת- </strong>לרב מדד תשומות הבנייה יקר יותר ממדד המחירים לצרכן. נסו לבקש מהקבלן הצמדה<br /> למדד המחירים לצרכן ולא לתשומות הבנייה הרי מדד זה מבטא בהחלט גם הוא את עלויות הקבלן.<br /> מדד תשומות הבנייה אינו מבטא את עלויות הקרקע והרווח של היזם אלא רק את עלויות הבנייה, אך<br /> למרות הכל המדד מחושב גם עליהם. קיים פער שאנו משלמים עליו ולצערי, השאלה על כך לא<br /> פתורה. </p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p><strong>אדאג לכם לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית !</strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-8 -->
+                <div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">מס.. רכישה.. וכל מה שביניהם</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>מס רכישה חל על הקונה והוא משולם ברכישת דירה. מס רכישה אינו חל על רווחים והוא משולם לרשות המס כאשר רוכשים נכס מקרקעין. המס משולם על ההשקעה עצמה, בהתאם למדרגות מס הרכישה (להבדיל ממס שבח שחל על המוכר בעת מכירת הנכס ומחושב ע"י פקיד שומה. סכום המכירה פחות סכום הקנייה זהו מס שבח).</p>
+                                <br />
+                                <p>רשויות המס מבינות שיש מצבים שלפני שהרוכש מוכר את הדירה הקודמת הוא קונה דירה אחרת, ואז יש תקופה מסוימת שהוא מחזיק בשתי דירות. מדובר בטווח קצר שמהווה טווח ביניים עד למועד המכירה ולכן רשויות המס <strong>פוטרות</strong> את הרוכש ממס רכישה על הדירה באם הוא מוכר את הדירה בטווח של שנה. </p>
+                                <br />
+                                <p>מס רכישה משולם בהתאם למדרגות. ככל שעסקת הרכישה בעלות גבוהה יותר, כך המס ושיעורו גבוהים יותר. שיטת מדרגות מס הרכישה מאפשרת תשלום לפי היקף העסקה, כך שבעסקאות לרכישת דירות בהיקף נמוך, מס הרכישה בהתאמה נמוך ובמקרים רבים אין כלל מס רכישה.</p>
+                                <br />
+                                <p>כולם משלמים מס רכישה אבל אם אתם רוכשים דירה ראשונה/ יחידה או אם אתם משפרי דיור ותמכרו את הדירה הקודמת בטווח של שנתיים אז המס יהיה מופחת ביחס לרוכשי דירה שנייה/ שלישית וכו'.</p>
+                                <br />
+                                <p>מדרגות מס רכישה מתעדכנות אחת לשנה ב 15 בינואר. </p>
+                                <br />
+                                <p><strong>מדרגות מס רכישה דירה ראשונה </strong></p>
+                                <br />
+                                <p><strong>0% </strong>על חלק השווי שעד<strong> 1,744,505 ש"ח. </strong></p>
+                                <br />
+                                <p><strong>3.5% </strong>על המדרגה שבין <strong>1,744,505 ש"ח ועד 2,069,205.</strong></p>
+                                <br />
+                                <p><strong>5% </strong>על המדרגה שבין <strong>2,069,205 ש"ח ועד 5,338,290 ש"ח.</strong></p>
+                                <br />
+                                <p><strong>8% </strong>על המדרגה שבין <strong>5,338,290 ועד 17,794,305 ש"ח.</strong></p>
+                                <br />
+                                <p><strong>10% </strong>מעל <strong>17,794,305 ש"ח.</strong></p>
+                                <br />
+                                <br />
+                                <p><strong>מדרגות מס רכישה דירה שנייה</strong></p>
+                                <p>המס משולם כאשר לרוכש כבר יש דירה בבעלותו ורוכש דירה על שמו. <strong> חשוב לדעת- </strong>רוכש דירה נוספת שמוכר דירה קיימת תוך 24 חודשים , יחויב בשיעור מס רכישה נמוכים- כאילו זו דירתו היחידה. </p>
+                                <br />
+                                <p><strong>8% עד  5,340,425ש"ח.</strong></p>
+                                <br />
+                                <p><strong>10% החל מ 5,340,425  ש"ח.</strong></p>
+                                <br />
+                                <p><strong>מס רכישה על קרקע / מגרש </strong>הינו <strong>6%</strong>. כל רכישת קרקע או זכות במקרקעין אשר אינה נופלת להגדרת דירה תחויב במס זה.<strong>  חשוב לדעת- </strong>אם רוכשים מגרש שנכון למועד עסקת הרכישה , קיימת עליו תוכנית בנייה, המתירה לפחות בניה של דירת מגורים אחת או שמדובר בקרקע / מגרש שהתקבל בגינה היתר בניה לפחות לדירת מגורים אחת בתוך שנתיים ממועד רכישת הקרקע, אז יהיה מס הרכישה <strong>5%</strong>. </p>
+                                <br />
+                                <p><strong>פינוי בינוי - </strong>דירת מגורים אותה מקבל הדייר מהיזם במתחם פינוי בינוי או מחוצה לו, בתמורה לדירתו הישנה במתחם- פטורה ממס רכישה. </p>
+                                <br />
+                                <p><strong>העברת נכס בין בני זוג בהליך גירושין - </strong>פעולה זו לא נחשבת עסקה במקרקעין ולכן אין עליה מס רכישה. </p>
+                                <br />
+                                <p><strong>אדאג לקבלת המשכנתא הטובה ביותר עבורכם ואלווה אתכם יד ביד עד לחתימות בבנק בשירות אישי, אדיב ומקצועי. אפנה אתכם לעו"ד אמינים ומקצועיים שתוכלו לקבל את שירותם. </strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p><strong>הבהרה: </strong>המידע המפורט לעיל אינו מהווה ייעוץ משפטי ואינו ממצה את כל הדרישות והתנאים לביצוע עסקאות. התכנים הכלולים במאמר זה באים כשירות לציבור ואינם מהווים תחליף לקבלת ייעוץ אצל עו"ד. </p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-9 -->
+                <div class="modal fade" id="myModal9" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">משכנתא הפוכה</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>הגעתם לגיל שאפשר להתחיל? אם אתם בני 60 + ואתם בעלי נכס אז המשכנתא הזו מיועדת בדיוק בשבילכם ! </p>
+                                <br />
+                                <p>המשכנתא מיועדת ללווים בני 60 ועד גילאי 94. שואלים איך זה הגיוני? בכל הבנקים תקרת הגיל למשכנתא מסתכמת בגיל 75 (80 אם הגזמתי..) </p>
+                                <br />
+                                <p><strong>אז מה ההיגיון ואיך זה מתרחש?</strong></p>
+                                <br />
+                                <p>חשוב מאד להבין שמשכנתא הפוכה נועדה לבני גיל הזהב היקרים שמעוניינים לסלק משכנתא קיימת/  לעזור לילדים / לפרוע הלוואות / לעבור לדיור מוגן / שיפוצים וכו'. (אם אפשט את זה אז הכוונה להלוואה לכל מטרה בסכומי כסף גבוהים).</p>
+                                <br />
+                                <p>במשכנתא זו אחוז המימון נקבע בהתאם לגיל הלווים והנכס חייב להיות על שמם של הלווים שמתגוררים בנכס. בהלוואה זו לא בודקים הכנסות אלא רק את תקינות הנכס. ההלוואה אינה מותנית ברכישת ביטוח חיים וכפופה לאישור הגוף המממן.</p>
+                                <br />
+                                <p>ההלוואה ניתנת לפירעון ב 2 אופנים: הלוואת בלון עד שאחרון מבני הזוג הולך לעולמו או תשלום חודשי של ריבית בלבד צמודה למדד ודמי ניהול חודשיים. אין עמלת פירעון על ההלוואה. </p>
+                                <br />
+                                <p>כאשר אחרון הלווים הולך לעולמו היורשים מתחייבים תוך שנה לפרוע את ההלוואה באמצעות לקיחת משכנתא על הנכס או לחלופין למכור את הנכס ולהתחלק בשאר כספי המכירה לאחר תשלום החוב לגוף המממן. </p>
+                                <br />
+                                <p>חשוב להבין: עצם העובדה שיש בבעלותכם נכס שניתן לשעבד אותו מהווה ביטחון מספק לגורם המממן להעמיד לכם הלוואה לצרכים האישיים שלכם. </p>
+                                <br />
+                                <p><strong>אני אדאג לקבלת המשכנתא הטובה ביותר עבורכם על מנת שאתם תוכלו לחיות בנחת ובשקט נפשי !</strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-10 -->
+                <div class="modal fade" id="myModal10" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">מחיר למשתכן</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>איך לוקחים משכנתא על דירות במחיר למשתכן? האם יש להתחשב בשווי הכלכלי של הדירה במחיר שהדירה נקנתה כפי שנקבע בחוזה ? </p>
+                                <br />
+                                <p>רוכשי דירות מקבלים מימון / משכנתא בסך של 75% לכל היותר בעוד שרוכשי הדירות בתוכנית מחיר למשתכן ייהנו משיעורי מימון אפקטיביים משמעותיים וזה לא עניין של מה בכך. לרוכשים אלו קיימת הטבה כפולה מכיוון שמעבר לכך שהם רוכשים דירה בזול הם גם לא צריכים לשלם הון עצמי גבוה כפי שנדרשים קונים אחרים ברכישת דירות.</p>
+                                <br />
+                                <p>במקרים רבים ידרשו להון עצמי של כ 100 א' ש"ח בלבד ואחוז המימון שיוכלו לקבל יסתכם בכ 85% עד 90% משווי השוק כלומר שווי הערכת השמאי (ולא כפי שרשום בחוזה הקנייה שכאמור יהיה נמוך יותר).</p>
+                                <br />
+                                <p>שיעורי המימון הגבוהים ניתנים כי הקנייה במחיר למשתכן אינו המחיר בפועל/ מחיר השוק של דירה לאותו אזור. על פניו, ביחס למחיר למשתכן מדובר בשיעורי מימון מאד נמוכים אבל ביחס למחיר האמיתי של הדירה, זה עשוי להיות משמעותית נמוך יותר. האוצר ובנק ישראל קבעו שלא ניתן לאשר 100% מימון משווי הנכס בתוכנית מחיר למשתכן (למרות שעדיין אחוזי המימון גבוהים מאד ותיאורטית אינם רחוקים מן הקביעה).</p>
+                                <br />
+                                <p><strong>מידע שחשוב לדעת-</strong> מבחינת הבנקים מה שחשוב לצורך הבטחת ההלוואה הוא השווי האמיתי של הנכס (כפי שהעריך השמאי) ולא בכמה הדירה נקנתה לפי חוזה הרכישה. </p>
+                                <br />
+                                <p>התנאים לקבלת משכנתא במחיר למשתכן זהה לתהליך קבלת משכנתא "רגילה" והרוכשים צריכים לעמוד בבדיקות המשכנתא הרגילות של הבנקים. </p>
+                                <br />
+                                <p>יש לפנות לסניפי בנק שמכירים את התחום אחרת זה יקשה עליכם בתהליך קבלת הכספים. מה גם שלא צריך להיות הבדל בריביות לרוכשי דירות במחיר למשתכן.  </p>
+                                <br />
+                                <strong>לתשומת ליבכם-</strong> חשוב להתייחס לרכישת דירה במחיר למשתכן כאל רכישת נדל"ן לכל דבר. זוג שזכה בהגרלה ימתין כ 5 שנים עד כניסתו לדירה, לכן מומלץ לחשב את עלות השכירות בתוספת עלות הנכס ולבחון את כדאיות העסקה. זוג שזכה בהגרלה לא ברור איזה דירה יקבל והאם מתאימה לצרכיו האישיים. את גודל הדירה, הקומה וכו' תדעו רק לאחר שיזמנו אתכם לפגישה אישית לבחירת דירה וחתימה על החוזה היו לא מעט אנשים שנאלצו לוותר על הזכייה והחליטו לא לרכוש דירה בפרויקט מכיוון שהדירות שנותרו לא תאמו את צרכיהם או שלא תאמו לתקציב.
+
+                                <br /><br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p><strong>אדאג לכם לקבלת המשכנתא הטובה ביותר עבורכם בהתאמה אישית ואדאג שההליך יהיה פשוט, יעיל וחסכוני.  </strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-11 -->
+                <div class="modal fade" id="myModal11" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">הכינו עצמכם לבניה עצמית !</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>החלטתם לבנות את בית חלומותיכם? מזל טוב !</p>
+                                <br />
+                                <p>בנייה עצמית כרוכה בלבטים רבים ויש לקבל החלטות רבות ומגוונות, לרבות ההתמודדות מול בירוקרטיה ובעלי מקצוע שונים. כדי שהחלום לא יהפוך לסיוט, חשוב שתערכו בצורה נכונה ותבצעו תכנון מקדים שיכלול הוצאות לא צפויות ויאפשר לכם לקבל החלטת פיננסיות יעילות ונכונות, יעניק לכם שקט נפשי ויעזור למזער סיכונים בעתיד. בבניה עצמית הקושי הוא ביכולת לצפות את הסכום שנדרש לשלם בסופו של דבר. אומדן העלויות יעזור לקבוע את היקף הבניה ורמת הגימור. </p>
+                                <br />
+                                <p>הכינו תכנית שתהיה הכי קרובה למציאות וכדי שההפתעות בהמשך הבניה יהיו מינוריות. הכינו תכנית שתכלול עלות<strong> רכישת הקרקע </strong> (ברכישת הקרקע ממנהל מקרקעי ישראל יש להוסיף גם עלות פיתוח לקרקע), עלות הבניה (מ"ר לבניה כפול עלות למ"ר ) <strong> והוצאות נוספות </strong>כגון: מס רכישה, היטל השבחה, שכר טרחה לעו"ד, דמי תיווך, עלויות מימון, הצמדת עלויות למדד המחירים לצרכן או למדד תשומות הבנייה, עיכובים בלוחות זמנים, אגרות וטפסים, עלות מפקח בניה, מהנדס, שכר טרחה לאדריכל ואנשי מקצוע נוספים, תכולת המבנה: ריהוט, מטבח, כלים סניטרים וכו' והרשימה עוד ארוכה.. </p>
+                                <br />
+                                <p>מה גם שקיימים תשלומים חד פעמים בעת לקיחת המשכנתא כגון: שמאות, רישום ביטחונות, דמי פתיחת תיק לבנק, שכר טרחה ליועץ משכנתאות, ובמידה ויש חריגות בתקציב הן משפיעות על גובה המשכנתא וההחזר החודשי. </p>
+                                <br />
+                                <p><strong>בשלב רכישת הקרקע </strong>אינכם נדרשים להציג תכניות בניה או היתרים כלשהם לבנק והכספים ישולמו ישירות לקבלן בפעימה אחת. <strong>בשלב הבנייה </strong>תדרשו להציג תכניות מפורטות של בניית הבית, תכניות קבלן, מפקח בניה וכו' והכספים יועברו לחשבונכם בהדרגה. כספי המשכנתא ישוחררו באופן הדרגתי בהתאם להתקדמות הבניה לפי אישור מהנדס או שמאות עדכנית עד לסכום שאושר בבנק לבניה העצמית.</p>
+                                <br />
+                                <p><strong>חשוב לדעת:</strong> במשכנתא לבניה עצמית תמיד רצוי לבקש סכום גבוה יותר מהתכנון שביצעתם כדי שתוכלו להשתמש בו במידה וחרגתם מהתקציב. אתם לא תשלמו על כל המסגרת שאושרה אלא רק על הסכום שלקחתם. לרב הבנק יאשר עד 75% מימון לרכישת המגרש ועד 60% מימון לבניה כדי למזער סיכונים במידה ותחרגו מהתקציב. הבנק תמיד יעדיף להישאר עם מרווח ביטחון. הבנק אינו מחויב לאשר אך לרב יעדיף לאשר מימון נוסף כדי שיהיה לו נכס למשכן לטובתו בגין האשראי. </p>
+                                <br />
+                                <p>בנייה עצמית מחייבת אתכם להתמודד עם עלויות גבוהות בשלבים הראשונים והשקעת זמן ומשאבים רבים, אך בסופו של דבר תקבלו בית המתאים באופן מושלם לצרכים הייחודיים שלכם ותחיו את החלום שלכם. </p>
+                                <br />
+                                <p><strong>אשיג לכם את התנאים הטובים ביותר צעד אחר צעד להגשמת החלום שלכם !</strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-12 -->
+                <div class="modal fade" id="myModal12" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">פרויקט תמא 38</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>תמ"א 38 היא תכנית מתאר ארצית לחיזוק מבנים קיימים מפני רעידות אדמה והוכנה ביוזמת המועצה הארצית לתכנון ולבנייה ,עקב מיקומה של מדינת ישראל על קו השבר הסורי-אפריקני, הנמצאת בסיכון גבוה לרעידות אדמה. </p>
+                                <br />
+                                <p>מטרתה של התכנית היא להעניק תמריץ כלכלי לחיזוק מבנים (שנבנו לפני שנת 1980), על ידי הענקת זכויות בנייה מוגדלות, וכן קיצור ההליכים הבירוקרטיים לקבלת היתרי בניה ללא צורך בהכנת תכנית מפורטת, ובכך לעודד בעלי בתים לחזק את המבנים שבבעלותם. </p>
+                                <br />
+                                <p>המשמעות היא חיזוק הבניין הקיים והוספת עד שתי קומות (בדרך כלל קומה רגילה ועוד קומה נוספת לפנטהאוז או שתי דירות גג עם חדר יציאה אל הגג). בתמורה הדיירים מקבלים לרב חדר נוסף בדמות ממ"ד ומעלית. (מבנים שההיתר לבנייתם ניתן אחרי תאריך זה חלות הוראות חיזוק בלבד ללא תוספת זכויות בנייה). </p>
+                                <br />
+                                <p>במסגרת פרויקט זה (תמ"א 38/1) , זוכים הדיירים ליתרונות רבים. זוהי דרך מקורית ומהירה להשביח את ערך הנכס ללא עלות כספית מצד הדיירים, וכל ההוצאות הקשורות בביצוע הפרויקט משולמות על ידי היזם. בפרויקטים של הריסה ובניה (תמ"א 38/2) מקבל בעל הדירה הקיים החזר שכ"ד לתקופת ההקמה עד לאכלוס בדירה החדשה.</p>
+                                <br />
+                                <p>על אף חשיבותו הגבוהה של הפרויקט, תמ"א 38 מומש בצורה מועטה בעיקר מפאת קשיי המימון של היזם. חיזוק המבנים שהיזם מבצע הינו בכפוף לזכויות הבנייה על גגות הבניינים. הפרויקט התברר כמורכב מכיוון שהגגות אינם ניתנים לשעבוד ובמידה והיזם יכנס לקשיים ויהפוך לחדל פירעון, הפרויקט לא יצלח ולבנק לא יהיו ביטחונות לממש. (מדובר בזכויות בנייה ולא בזכויות על הקרקע עצמה ולכן קיים קושי במתן ביטחונות לבנק כתנאי למימון הפרויקט).</p>
+                                <br />
+                                <p>מדובר בפרויקט הדורש התמקצעות אמיתית בתחום וחשוב מאד להתייעץ עם בעלי מקצוע נכונים.</p>
+                                <br />
+                                <p><strong>אגבש את הדרך הכי טובה עבורכם ללקיחת משכנתא בהתאמה אישית ובליווי פיננסי מקיף. </strong></p>
+                                <br />
+                                <p><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות: משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו! </strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-13 -->
+                <div class="modal fade" id="myModal13" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">קבוצות רכישה</h3>
+                            </div>
+                            <div class="modal-body">
+                                <br />
+                                <p>קבוצת רכישה היא קבוצת אנשים פרטיים המתאגדת יחד "בהסכם שיתוף" על מנת לרכוש קרקע ולבנות עליו מבנה מגורים, במטרה להוזיל עלויות .קבוצת רכישה יכולה להתארגן באופן עצמאי או באמצעות חברה מנהלת המארגנת את כל שלבי הרכישה והבנייה. הקבוצה מאפשרת לחבריה להקטין את פערי התיווך שבקניית הנכס כמוצר מוגמר. מאידך, לרוב הסיכון שבהשתתפות ביזום הפרויקט גדול יותר מהסיכון שבקניית אחת הדירות, והמחיר הסופי אינו מובטח. כאמור, קבוצת רכישה היא גוף יזמי לכל דבר, על כל הסיכונים והסיבוכים הכרוכים ביזמות נדל"ן. </p>
+                                <br />
+                                <p>נדרש להשיג ליווי בנקאי ומסגרת אשראי לפרויקט בכללותו, ובאופן פרטני לכל חבר בקבוצה מבוצעת בדיקת פרופיל פיננסי בכדי לקבל אישור מהבנק המלווה. חבר שיש ברשותו את כל ההון העצמי הנדרש לעסקה גם הוא חייב לפתוח מסגרת אשראי בבנק המלווה. דבר זה מהווה רשת ביטחון שלא ייווצרו בעיות מימון במהלך הפרויקט. </p>
+                                <br />
+                                <p>כספי המשכנתא של חברי קבוצת הרכישה משולמים לקבלנים ולאנשי המקצוע על פי קצב התקדמות הבניה. הבנק מתייחס לכל לקוח כאל יזם בפרויקט ועל כן עלויות המימון גבוהות ביחס לאדם פרטי שלוקח משכנתא.  </p>
+                                <br />
+                                <p>הקבוצה מאתרת את הקרקע, מגייסת את הרוכשים הפוטנציאלים, מקבלת הצעות מחיר מקבלני הביצוע ואנשי המקצוע ומתנהלת מולם. בחירת אנשי המקצוע מאד משמעותית בפרויקט מסוג כזה ואין להקל ראש בבחירתם. שיתוף הפעולה בין הגורמים הינו קריטי ומכריע וזהו תהליך מורכב שדורש תכנון פיננסי מעמיק כבר מתחילת הפרויקט. </p>
+                                <br />
+                                <p><strong>אלווה אתכם יד ביד בליווי פיננסי מקיף ואדאג שההליך יהיה פשוט, יעיל וחסכוני . הרצונות, האינטרסים והצרכים שלכם הופכים להיות המטרה שלי.</strong></p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים. </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal-14 -->
+                <div class="modal fade" id="myModal14" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h3 class="modal-title" id="myModalLabel">מה משמעות החוק להגבלת השימוש במזומן ברכישת מקרקעין?</h3>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    החוק לצמצום השימוש במזומן נכנס לתוקף בינואר 2019 ונועד לוודא שעסקאות מקרקעין ואחרות לא יחרגו ממגבלת השימוש במזומן המותרת על פי החוק החדש. בחוק נקבע כי יוטל עיצום כספי או קנס מנהלי על מפרי החוק, בהתאם לסיווגם וכן עונשי מאסר בשל מעשי מרמה. 
+                                </p>
+                                <br />                                
+                                <p><u>הגבלות התשלום בעסקאות נדל״ן מחולק ל 2 קטגוריות:</u></p>
+                                <p>
+                                   1. כאשר העסקה היא כמי שמוגדר 
+<strong>״כעוסק״</strong>
+(כגון: רכישה מקבלן) ניתן לשלם במזומן עד סכום של 10% משווי העסקה או 11,000 ₪ (הנמוך מביניהם).
+ 
+                                </p>
+                                <p>
+                                    2. כאשר העסקה היא בין שני <strong>אנשים פרטיים</strong> (כגון: רגישה מיד שניה) אז ההגבלה עומדת על 10% משווי העסקה או 50,000 ₪ (הנמוך מבניהם).
+                                </p>
+                                <br />
+                                <p><u>להלן ההגבלות החלות הן על עוסק (במסגרת עסק) והן על אדם פרטי:</u></p>
+                                <p>
+                                    כאשר <strong>עוסק</strong> במסגרת עסקו, <strong>רוכש \ מוכר</strong> ומחיר העסקה <strong> עד 11,000 ₪</strong> המגבלה של תשלום המזומן היא <strong>11,000 ₪ או 10% </strong> ממחיר העסקה (לפי הנמוך מבינהם).
+                                </p>
+                                <br />
+                                <p>
+                                    כאשר <strong>אדם פרטי מוכר (לאדם פרטי או לעוסק)</strong> ומחיר העסקה <strong>עד 50,000 ₪</strong>, מותר לו <strong>לקבל</strong> את כל הסכום במזומן. במקרה בו מחיר העסקה <strong>גבוה מ 50,000 ש"ח</strong>, הוא יכול לקבל מזומן סכום <strong>שלא יעלה על 50,000 ש"ח</strong> או <strong>10%</strong> ממחיר העסקה <strong>(לפי הנמוך מבינהם).</strong>
+                                </p>
+                                <br />
+                                <p>
+                                    כאשר <strong>אדם פרטי קונה מאדם פרטי אחר</strong> ומחיר העסקה <strong>עד 50,000 ש"ח</strong> מותר לו <strong>לשלם</strong> במזומן סכום <strong>שלא יעלה על 50,000 ₪ </strong> או <strong>10%</strong> ממחיר העסקה <strong>(לפי הנמוך מבינהם).</strong>
+                                </p>
+                                <br />
+                                <p>
+                                    כאשר <strong>אדם פרטי קונה מעוסק</strong> ומחיר העסקה <strong>עד 11,000 ₪ </strong> מותר לו <strong>לשלם</strong> את כל סכום התשלום במזומן. במקרה בו מחיר העסקה <strong>גבוה מ 11,000 ש"ח</strong> הוא יכול לשלם במזומן סכום שלא יעלה על <strong>11,000 ₪ או 10%</strong> ממחיר העסקה <strong>(לפי הנמוך מבניהם).</strong>
+                                </p>
+                                <br />
+                                <p><u>** העיצום הכספי יחול על כל הסכום שלא תועד ויחושב כדלקמן:</u></p>
+                                <p><strong>שיעור העיצום ע"פ המדרגות הקבועות בחוק.   X סכום התשלום ו/או התקבול שלא תועד </strong></p>
+                                <p>עד <strong>25,000 ש"ח</strong> שיעור העיצום יהיה <strong>15%</strong></p>
+                                <p>בין <strong>25,000 ל 50,000 ש"ח</strong> שיעור העיצום יהיה <strong>25%</strong></p>
+                                <p>מעל <strong>50,000 ש"ח</strong> שיעור העיצום יהיה <strong>30%</strong></p>
+                                <br />
+                                <p>** בעסקת מכר של נכס ושירות, כאשר התמורה <strong>משולמת בתשלומים על פי חוזה הרכישה מחיר העסקה ייחשב כמחיר הכולל של כל התשלומים.</strong></p>
+                                <br />
+                                <p><u>ישנם <strong>שני</strong> מקרים <strong>חריגים</strong> שייחשבו <strong>כעסקה נפרדת</strong>:</u></p>
+                                <p>1.בעסקה למתן <strong>שירות</strong> שהתשלום הוא על <strong>בסיס חודשי \ רבעוני</strong> כל תשלום <strong>ייחשב כעסקה נפרדת.</strong></p>
+                                <p>2.תשלומי <strong>שכירות</strong> ייחשבו <strong>כעסקה נפרדת</strong> וכל תשלום יהווה <strong>מחיר עסקה.</strong></p>
+                                <br />
+                                <p>
+                                    *** ההגבלות על שימוש במזומן <strong>חלות</strong> גם <strong>בין שני תושבי חוץ</strong> בעסקת מכירת <strong>מקרקעין בישראל.</strong>
+                                </p>
+                                <br />
+                                <p>
+                                    ** ההגבלות על שימוש במומן <strong>לא חלות בין קרובי משפחה <u>למעט</u></strong> תשלום במזומן לקרוב משפחה בגין <strong>שכר עבודה.</strong>
+                                </p>
+                                <br />
+                                <p>** עד כה עסקאות מקרקעין חויבו בדיווח מקוון לרשות המיסים שלרב בוצעו ע"י עורכי דין, ולא היתה חובה לדווח כיצב יבוצע התשלום על הנכס. במסגרת החור להגבלת השימוש במזומן, <strong>החוק מחייב</strong> את רוכשי הדירות <strong>לדווח תוך חצי שנה לרשות המיסים על אופן התשלום</strong> (שיק \ העברה בנקאית \ שיק בנקאי וכו,). עסקה שלא תדווח תוך חצי שנה <strong>לא תקבל אישור לרישום העסקה בטאבו.</strong></p>
+                                <br />
+                                <p>
+                                    הדיווח יעשה באמצעות <strong>דיווח מקוון</strong> ביישום ייעודי שיפתח באתר האינטרנט של רשות המיסים, שאליו <strong>יידרש</strong> המדווח לצרף אסמכתאות לתשלום (צילום שיק \ העברה בנקאית וכו'). ללא התייחסות לאמצעי התשלום לא יהיה ניתן לשלוח את ההצהרה המקוונת.
+                                </p>
+                                <br />
+                                <p>
+                                    עיקרי החוק שמינואר 2019 לא ניתן לשלם על שירותים (כגון שיפוצים) מעל 11,000 ₪ במזומן, והעבירה תתייחס <strong>הן לנותן השירות והן למשלם.</strong>
+                                </p>
+                              
+                                <br />
+                                <p style=" text-align: center;"><strong>כששואלים אותי מהי משכנתא טובה? אני נוהגת לענות:</strong></p>
+                                <p style=" text-align: center;"><strong>משכנתא בהתאמה אישית כי לכל אחד יש את הבית האישי והמיוחד שלו!</strong></p>
+                                <br />
+                                <p>
+                                    <strong>הבהרה:</strong> המידע המפורט לעיל אינו מהווה ייעוץ משפטי ואינו ממצה את כל הדרישות והתנאים לביצוע עסקאות. התכנים הכלולים במאמר זה באים כשירות לציבור ואינם מהווים תחליף לקבלת ייעוץ אצל עו"ד. 
+                                </p>
+                                <br />
+                                <p>המאמר נכתב ע"י שירן בר-עוז, ייעוץ, נדל"ן, משכנתאות ופיננסים.</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+</section><!--main-section-end-->
+<section style="background-color: #ffffff;height: 2px"></section>
+<!--<section style="background-color: #7c64a0;height: 30px"></section>-->
+<section style="background-image: url(img/WhiteBricks.jpg);height: 100px;"></section>
+
+<section class="main-section client-part" id="calc" style='min-height: 80%;display: flex;align-items: center;'><!--main-section client-part-start-->
+	<div class="container">
+		<b class="quote-right wow fadeInDown delay-03"><i class="fa-quote-right"></i></b>
+    	<div class="row">
+        	<div class="col-lg-12">
+            	<p class="client-part-haead wow fadeInDown delay-05">כששואלים אותי, מהי משכנתא טובה? אני נוהגת לענות ... 
+            <br /><strong>משכנתא בהתאמה אישית</strong> <br />כי לכל אחד יש את הבית האישי והמיוחד שלו !</p>
+            </div>
+        </div>
+    	<ul class="client wow fadeIn delay-05s">
+        	<li><a href="#">
+            	<img src="img/shiran.jpg" >
+                <h3 style="font-size: x-large;">שירן בר-עוז</h3>
+                <span style='font-size: large;'>ייעוץ , נדל״ן , משכנתאות ופיננסים</span>
+            </a></li>
+        </ul>
+    </div>
+</section><!--main-section client-part-end-->
+<div class="c-logo-part" style="background-image: url(img/WhiteBricks.jpg)"><!--c-logo-part-start-->
+	<div class="container">    	
+        <ul style="margin-left: -100;margin-right: -100;">        
+            <li><a class="btn btn-primary" target="_blank" href="https://ecom.gov.il/voucherspa/input/440?clear=true" id="calcbutton">הפקת נסח טאבו</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://mapi.gov.il/Pages/LotAddressLocator.aspx" id="calcbutton">איתור גוש וחלקה לפי כתובת</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://fileextractor.justice.gov.il/tabu" id="calcbutton">תשריט בית משותף</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="calc.html" id="calcbutton">מחשבון זכאות</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="http://www.dira.gov.il/Pages/HomePage.aspx" id="calcbutton">מחיר  למשתכן</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="https://www.misim.gov.il/svsimurechisha/frmFirstPage.aspx?cur=1#nbb" id="calcbutton">מס רכישה</a></li>
+            <li><a class="btn btn-primary" target="_blank" href="https://www.misim.gov.il/svtsvazmitnew/frmPrivateDetails.aspx" id="calcbutton">מדד שבח</a></li>
+        </ul>
+	</div>
+</div><!--c-logo-part-end--> 
+
+    
+    
+<section id="nicetomeet" style="background-color: #ffffff;min-height: 70% ">
+	<div id="nicetomeetdiv">
+        <p>ברוכים הבאים לאתר משכנתא בהתאמה אישית, הרשו לי לברך אתכם על החלטתכם לרכוש נכס ועל היוזמה למנף את עצמכם. </p>
+		<br />
+        <p>נעים מאד שמי שירן בר-עוז, יועצת משכנתאות רשומה וחברה בהתאחדות יועצי המשכנתאות. מהרגע שהשתחררתי מהצבא עבדתי בבנק ורכשתי ניסיון מקצועי וניהולי של כ 12 שנות וותק בנקאי,  בעלת MBA במנהל עסקים בהתמחות מימון ומשאבי אנוש ויש לי רישיון תיווך עוד מתקופת התעסקותי בעולם הנדל"ן. עסקתי במספר תחומים בחיי, אך כשגילתי את תחום המשכנתאות התאהבתי. </p>
+        <br />
+        <p>אני מזמינה אתכם להיכנס לעסקה הפיננסית הגדולה של חייכם בראש שקט. אנהל את כל התהליך עבורכם מול הבנקים ואשיג את התנאים הטובים ביותר עבורכם. מעבר להיותי יועצת משכנתאות, יש לי את הידע והניסיון שרכשתי במגוון עיסוקים בחיי, המשמשים כלי משמעותי להעניק לכם את השירות הטוב ביותר ליצירת משכנתא <strong> בהתאמה אישית</strong> לפרופיל הפיננסי <strong> שלכם</strong>. </p>
+        <br />
+        <p>לאחר שנים רבות שעבדתי בתוך המערכת הבנקאית אני יודעת שקיים ניגוד אינטרסים מובהק בין הבנק לבין הלקוח. לבנק יש אינטרס להרוויח כמה שיותר כסף ולכם חשוב לשלם כמה שפחות כסף ובמסלולים הכי נכונים עבורכם </strong>בהתאמה אישית ! </strong></p>
+        <br />
+        <p>הרצונות, האינטרסים והצרכים שלכם הופכים להיות המטרה שלי. אלווה אתכם יד ביד ואגבש את הדרך הכי טובה עבורכם ללקיחת משכנתא <strong>בהתאמה אישית</strong> בליווי מקיף ופתרונות מיטיבים באופן מקצועי והקפדה על דיסקרטיות.</p>
+        <br />
+        <p>במשכנתא בהתאמה אישית אלווה אתכם צעד צעד לעבר לקיחת המשכנתא הטובה ביותר עבורכם עד לחתימות בבנק, תוך הקפדה על מסלולים שמותאמים לצרכים הפיננסים והאישיים שלכם. אדאג לפיתרונות הכי נכונים עבורכם עם דגש על שירות אדיב, מקצועי ויחס אישי כשהדגש הוא שתחזירו מינימום כסף לבנק. אני עובדת עם התוכנות והסימולאטורים הכי מתקדמים ועדכניים ונמצאת תמיד עם היד על הדופק. </p>
+        <br />
+        <p>תהליך לקיחת המשכנתא ארוך ואף יכול להיות מסורבל ובמשכנתא בהתאמה אישית אהפוך את התהליך ליעיל, פשוט ואעניק לכם נחת, שקט נפשי וחסכון כספי רב. חשוב לי שתרגישו בטוחים ונינוחים בעסקה הכי חשובה לכם.  </p>
+        <br />
+        <p>כיועצת משכנתאות רשומה וחברה בהתאחדות יועצי המשכנתאות יש לי חשיבות מהותית בעסקה החשובה ביותר שלכם להרכבת תמהיל אופטימאלי והתאמתו לצרכים האישיים עבורכם. משכנתא לוקחים רק עם יועץ אובייקטיבי רשום שעובד בשבילכם ושומר על הכסף שלכם.. </p>
+        <br />  
+        <center><a class="btn btn-primary btn-block" target="_blank" href="certificates.html">התעודות שלי</a></center>
+        <center style="padding-top:10px;"><a  class="btn btn-primary btn-block" data-toggle="modal" data-target="#recommendationsmodal">המלצות חמות</a></center>
+	</div>
+        <div class="modal fade" id="recommendationsmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h3 class="modal-title" id="myModalLabel" style="color:#67217f;">המלצות חמות</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>שי וויקה שליש , אורנית:</strong></p>
+                        <p><i class="fa fa-quote-right" aria-hidden="true"></i> חשבנו שעשינו שיעורי בית בצורה הטובה ביותר ואנחנו לא צריכים ייעוץ, הרי יש ריביות ותקופה. על פניו נשמע דבר קל, אבל לא תאמינו זה עולם שלם שמצריך ידע, תכנון ומקצועיות. פנינו לשירן בדקה ה 90 והיא היתה שם בשבילנו בזמינות ובשרותיות ובסוף כמובן חסכנו כסף וקיצרנו תקופה בתכנון נכון. אנו ממליצים בחום כי שירן היא שילוב של מקצועיות ושירותיות ! <i class="fa fa-quote-left" aria
+                                -hidden="true"></i></p>
+                        <br />
+                        <p><strong>יהודית לוין, אם המושבות-פתח תקוה:</strong></p>
+                        <p>
+ <i class="fa fa-quote-right" aria-hidden="true"></i> שירן היקרה !  ב-2 פגישות ועשרה ימים ביניהם, הצלחת למחוק לי משכנתפוביה של עשרים שנה! (-:  . 
+הפכת את התהליך (המורכב) לקליל, מקצועי, יעיל והכי חשוב פונקציונאלי, מהיר<strong> וחסכוני. </strong>
+השקט הנפשי והתוצאה המעולה שהגעתי אליה במינימום זמן מעידים פעם נוספת שבהשקעה קטנה כל כך ניתן לקבל תמורה גבוהה כל כך. 
+המון תודות ומבטיחה לך שברכישה הבאה הטלפון הראשון הוא אליך! תודה רבה! <i class="fa fa-quote-left" aria-hidden="true"></i></p>
+                        <br />
+                        <p><strong> לוי אריאל ונטע, בני-ברק : </strong></p>
+<p><I class="fa fa-quote-right" aria-hidden="true"></i> מקצועניות, אמינות ושירות בעולם הרחב זה רק פרסומת, אבל אצל שירן זו עובדה.
+והכי חשוב מהכל הוא המסירות והאכפתיות שמגלה שירן ללקוחותיה.
+אנו חלק מלקוחותיה המרוצים מאד. ממליצים בחום לכל אלו שעדיין לא מצאו או מסתפקים למי לפנות. אל תחשבו פעמיים כי מצאנו לכם את הכתובת הנכונה ביותר שיכולה להיות. 
+תוכלו להיות שקטים ובטוחים שאתם בידיים טובות, נאמנות ומסורות.
+עם כל הלב אליכם.
+מודים ומעריכים מכל הלב: אריאל ונטע לוי. <br />
+מספרי טלפון : 1) 054-8413834 <br />
+	         2) 052-7112409  
+                        <I class="fa fa-quote-left" aria-hidden="true"></i></p>
+                        <br />
+                        <p><strong>יוריק וזבן שמלוב, תל-אביב:</strong></p>
+                        <p style="text-align:right;"><I class="fa fa-quote-right" aria-hidden="true"></i> לשירן היקרה!<br />
+אנו משפחת שמלוב רוצים להודות לך על הטיפול המסור, היחס האדיב והשירות המעולה.
+רצינו לעבור לדירה נוחה יותר עם מעלית ולשפר את איכות החיים מבחינה כלכלית, וכשפנינו אליך מצאת לנו פתרון יצירתי שגם שידרג את איכות החיים !
+אנו ממליצים בחום לקחת את שירותיה של שירן- רק תרוויחו ! <I class="fa fa-quote-left" aria-hidden="true"></i></p>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="color:#67217f;">סגור</button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+              </div> 
+</section>
+<section class="business-talking"  style="background-image: url(img/WhiteBricks.jpg)">
+	<div class="container" >
+    	<div class="row">
+        	<div class="client-part-haead wow">
+				 <div style="text-align:center;font-size:large;color:#000000;">
+                    <p><strong>אל תשלמו יותר ממה שהמציאות מחייבת !</strong></p>
+                    <p>בעסקה הכי חשובה שלכם השתמשו  <strong>בייעוץ פרטי - זה משתלם !</strong></p>
+                    <p style="padding-bottom: 10px;">משכנתא לוקחים רק עם יועץ רשום שעובד בשבילכם ושומר על הכסף שלכם</p>
+                    <p>מוזמנים לפנות אלי : </p>
+                    <p><strong>שירן בר-עוז 052-5787000</strong></p>
+                </div>	
+			</div>
+        </div>
+    </div>
+</section><!--main-section client-part-end-->
+<div class="container">
+<section class="main-section contact" id="contact">
+	    <div style="margin-right:auto;margin-left:auto;text-align:center;">
+            <h3 style="font-weight: bold;font-size: 23px;color:#999999;">לקבלת משכנתא בהתאמה אישית</h3>
+            <h3 style="font-weight: bold;font-size: 23px;color:#999999;">צרו קשר או השאירו פרטים</h3>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-sm-5 wow">
+                <h2 style="font-size: 18px;color:#999999;">לתיאום פגישת ייעוץ כתבו לנו ...</h2>
+            	<div class="form">
+                	
+                    <div id="sendmessage">הודעתך נשלחה. תודה!</div>
+                    <div id="errormessage"></div>
+                    <form action="?" method="post" role="form" class="contactForm">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control input-text" id="name" placeholder="שם מלא" data-rule="minlen:4" data-msg="Please enter at least 4 chars" />
+                            <div class="validation"></div>
+                        </div>
+                         <div class="form-group">
+                            <input type="text" name="phone" class="form-control input-text" id="phone" placeholder="פלאפון" data-rule="minlen:9" data-msg="Please enter at least 9 chars" />
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control input-text" name="email" id="email" placeholder="אימייל" data-rule="email" data-msg="Please enter a valid email" />
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group" style="color:#000000">
+                            <h3>נושא:</h3>
+                            <input type="radio" name="subject" value="new" checked> משכנתא חדשה<br>
+                            <input type="radio" name="subject" value="cycle"> מיחזור משכנתא<br>
+                            <input type="radio" name="subject" value="financial"> ליווי פיננסי והלוואה וכל מטרה<br>
+                            <input type="radio" name="subject" value="mortgagemix"> תמהיל בלבד<br>
+                            <input type="radio" name="subject" value="other"> אחר<br>
+                            <div class="validation"></div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control input-text text-area" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="כתוב הודעה..."></textarea>
+                            <div class="validation"></div>
+                        </div>
+                        
+                        <div class="text-center"><center><button type="submit" value="submit" class="btn input-btn">שלח הודעה</button></center></div>
+                    </form>
+                </div>	
+            </div>
+        	<div class="col-lg-6 col-sm-7" style="top: 42px;">
+                <div class="contact-info-box phone clearfix">
+                	<h3 id="floatright"><i class="fa-phone"></i> טלפון:</h3>
+                	<span id="floatleft">052-5787000</span>
+                </div>
+                <div class="contact-info-box email clearfix">
+                	<h3 id="floatright"><i class="fa-pencil"></i> אמייל:</h3>
+                	<span id="floatleft">barozshiran@gmail.com</span>
+                </div>
+            	<div class="contact-info-box hours clearfix">
+                	<h3 id="floatright"><i class="fa-clock-o"></i> שעות:</h3>
+                    <span id="floatleft"><strong>א'-ה': </strong>09:00-19:00<br><strong  style="margin: 11;">ו':</strong>09:00-12:00<br></span>
+                </div>
+                <div class="contact-info-box address clearfix">
+                	<h3 id="floatright"><i class="fa fa-map-marker"></i> כתובת:</h3>
+                	<span id="floatleft">דרך עדן 9, כניסה C קומה 2 ,ראשון לציון. </span>
+                </div>
+                <ul class="social-link" style="padding-left: 40%;">
+                    <li><a href="https://www.facebook.com/barozshiran/" target='_blank'><img src='img/facebookLogo.png'/></a></li>
+                    <li><a href="https://instagram.com/shiranbaroz" target='_blank'><img src='img/instagramLogo.png'/></a></li>
+                    <!--
+                    <li class="facebook"><a href="https://www.facebook.com/barozshiran/"><i class="fa-facebook"></i></a></li>
+                    <li class="instagram"><a href="https://instagram.com/shiranbaroz"><i class="fa-instagram"></i></a></li>                    
+                    -->
+                    
+                </ul>
+                <video id="vid" controls autoplay muted style="width:400px;height:400px;padding-bottom: 150px;">
+                        <source src="/Videos/shiran.webm" type="video/webm">
+                        <source src="/Videos/shiran4-HD.mp4" type="video/mp4">
+                </video>  
+            </div>
+        </div>
+</section>
+</div>
+<div>
+    <p style="text-align:center;color:#000000;padding-bottom:20px;">&copy; בניית האתר - אורן זהבי <br />ozehavi@gmail.com</p>
+</div>
+<script type="text/javascript">
+    $(document).ready(function(e) {
+        $('#test').scrollToFixed();
+        $('.res-nav_click').click(function(){
+            $('.main-nav').slideToggle();
+            return false    
+            
+        });
+        
+    });
+</script>
+
+  <script>
+    wow = new WOW(
+      {
+        animateClass: 'animated',
+        offset:       100
+      }
+    );
+    wow.init();
+  </script>
+
+
+<script type="text/javascript">
+	$(window).load(function(){		
+		$('.main-nav li a, .servicelink').bind('click',function(event){
+			var $anchor = $(this);			
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top - 102
+			}, 1500,'easeInOutExpo');
+			/*
+			if you don't want to use the easing effects:
+			$('html, body').stop().animate({
+				scrollTop: $($anchor.attr('href')).offset().top
+			}, 1000);
+			*/
+			event.preventDefault();
+		});
+	})
+</script>
+
+<script type="text/javascript">
+
+$(window).load(function(){
+  var $container = $('.portfolioContainer'),
+      $body = $('body'),
+      colW = 375,
+      columns = null;
+  
+  $container.isotope({
+    // disable window resizing
+    resizable: true,
+    masonry: {
+      columnWidth: colW
+    }
+  });
+  
+  $(window).smartresize(function(){
+    // check if columns has changed
+    var currentColumns = Math.floor( ( $body.width() -30 ) / colW );
+    if ( currentColumns !== columns ) {
+      // set new column count
+      columns = currentColumns;
+      // apply width to container manually, then trigger relayout
+      $container.width( columns * colW )
+        .isotope('reLayout');
+    }
+    
+  }).smartresize(); // trigger resize to set container width
+  $('.portfolioFilter a').click(function(){
+        $('.portfolioFilter .current').removeClass('current');
+        $(this).addClass('current');
+ 
+        var selector = $(this).attr('data-filter');
+        $container.isotope({
+			
+            filter: selector,
+         });
+         return false;
+    });
+  
+});
+</script>
+
+</body>
+</html>
